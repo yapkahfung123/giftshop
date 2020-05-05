@@ -1,25 +1,27 @@
 <?php
 
-class Pages extends Controller{
-    public function __construct(){
-        
+class Pages extends Controller
+{
+    public function __construct()
+    {
+
     }
 
-    public function index(){
+    public function error()
+    {
         $data = [
-            'title' => 'Welcome',
+            'title' => 'ERROR 404 | YMC',
         ];
-        
-        
-        $this->view('pages/index', $data);
+
+        $this->view('pages/404', $data);
     }
-    
-    
-    public function about(){
+
+    public function contactus()
+    {
         $data = [
-            'title' => 'About Us'
+            'title' => 'Contact Us | YMC',
         ];
-        $this->view('pages/about', $data);
-        
-}
+
+        $this->view('pages/contact-us', $data);
+    }
 }
