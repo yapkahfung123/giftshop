@@ -9,7 +9,7 @@
     <meta name="description" content="">
 
     <!-- Google Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,700%7CRaleway:300,400,700%7CPlayfair+Display:700' rel='stylesheet'>
 
     <!-- Css -->
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/bootstrap.min.css" />
