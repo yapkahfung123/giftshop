@@ -18,12 +18,12 @@ class Home extends Controller
 
     public function login()
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Sanitize String
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = [
-                'title'=>'Login | YMC',
+                'title' => 'Login | YMC',
                 "email" => $_POST['email'],
                 "password" => $_POST['password'],
                 "remember" => $_POST['remember'],
@@ -33,10 +33,10 @@ class Home extends Controller
             // If have data at backend
             $user_data = $this->homeModel->retriveUser($data['email']);
 
-            if($user_data == false){
+            if ($user_data == false) {
                 $data['error_msg'] = "Login Failed! Invalid Combination";
-            }else{
-                if (password_verify($data['password'],$user_data->password )){
+            } else {
+                if (password_verify($data['password'], $user_data->password)) {
                     //Set Cookie for remember password
                     if ($data['remember'] == 'on') {
                         setcookie('user_email', $data['email'], time() + (10 * 365 * 24 * 60 * 60));
@@ -53,7 +53,7 @@ class Home extends Controller
                     $_SESSION['login_successfully'] = 'You been login successfully.';
                     setUserSession($user_data->user_id);
                     redirect('home/account');
-                }else{
+                } else {
                     $data['error_msg'] = "Login Failed! Invalid Combination";
                 }
             }
@@ -78,8 +78,9 @@ class Home extends Controller
         $this->view('home/cart', $data);
     }
 
-    public function account(){
-        if(!isset($_SESSION['user_id'])){
+    public function account()
+    {
+        if (!isset($_SESSION['user_id'])) {
             redirect('home/login');
         }
 
@@ -128,11 +129,11 @@ class Home extends Controller
 
     public function register()
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = [
-                'title'=>'Register | YMC',
+                'title' => 'Register | YMC',
                 "email" => $_POST['email'],
                 "password" => $_POST['password'],
                 "confirm_pw" => $_POST['confirm_password'],
@@ -141,16 +142,16 @@ class Home extends Controller
                 "error_msg" => ''
             ];
 
-            if($data['password'] != $data['confirm_pw']){
+            if ($data['password'] != $data['confirm_pw']) {
                 $data['error_msg'] = "Password Combination Invalid";
             }
 
             $check_email = $this->homeModel->checkUser($data['email']);
-            if($check_email == false){
+            if ($check_email == false) {
                 $data['error_msg'] = "Email Taken. Please register with other email";
             }
 
-            if(empty($data['error_msg'])){
+            if (empty($data['error_msg'])) {
                 $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
                 $this->homeModel->insertUser($data);
 
@@ -172,10 +173,15 @@ class Home extends Controller
 
     public function logout()
     {
-        if(isset($_SESSION['user_id'])){
+        if (isset($_SESSION['user_id'])) {
             unset($_SESSION['user_id']);
             $_SESSION['successfully'] = "Logout Successfully";
         }
         redirect('home/login');
+    }
+
+    public function test()
+    {
+        $this->view('home/test');
     }
 }

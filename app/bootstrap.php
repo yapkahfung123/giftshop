@@ -1,9 +1,14 @@
 <?php
+//
+session_start();
 // Load config
-
 require_once 'config/config.php';
 require_once 'helpers/session_helper.php';
 require_once 'helpers/url_helper.php';
+require_once 'helpers/function_custom.php';
+require_once 'modules/kint/Kint.class.php';
+require_once 'modules/kint/parsers/parser.class.php';
+//require_once 'modules/xcrud/xcrud.php';
 
 
 

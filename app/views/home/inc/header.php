@@ -28,6 +28,9 @@
 </head>
 
 <body class="relative">
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AR0caWiSKPkwQFj2hIM3oIUMnu5Y9mZD-LJdgH_G-gOsIKaUGe76tyzwTC3uxvttu4v1jmcdxnwJldnU"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+</script>
 
 <!-- Preloader -->
 <!--<div class="loader-mask">-->

@@ -1,0 +1,22 @@
+.icon-margin .fas {
+    margin-left: 10px;
+}
+
+.addVariation {
+    margin: 0 0 12px 12px;
+}
+
+#modal-variation .row {
+    padding-bottom: 10px;
+}
+
+.tmp_image {
+    position: relative;
+}
+
+.cancelImg {
+    position: absolute;
+    border: transparent;
+    background: red;
+    color: white;
+}

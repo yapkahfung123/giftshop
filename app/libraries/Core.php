@@ -1,6 +1,6 @@
 <?php
 /*
-App Core Class
+App.php Core Class
 Creates URL & Load Core Controller
 URL Format - /controller/method/params
 */
@@ -10,9 +10,8 @@ class Core {
     protected $currentController = 'Home';
     protected $currentMethod = 'index';
     protected $params = [];
-    
+
     public function __construct(){
-        
         $url = $this->getUrl();
 
         
@@ -45,7 +44,6 @@ class Core {
             //unset 1 index
             unset($url[1]);
         }
-        
     }
      
         //Get Params
@@ -55,11 +53,7 @@ class Core {
         call_user_func_array([$this->currentController, $this->currentMethod], $this->params); 
         
     }
-    
-    
-    
-    
-    
+
     
     public function getUrl(){
         if(isset($_GET['url'])){
