@@ -84,6 +84,7 @@ class App extends Controller
             }else{
                 $data['response'] = 'no';
             }
+
             echo json_encode($data);
         }
     }

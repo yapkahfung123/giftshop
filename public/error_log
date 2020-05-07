@@ -1,9 +1,0 @@
-[05-May-2020 04:16:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/ymcstore/giftshop.ymcstore.com/app/libraries/Database.php:43
-Stack trace:
-#0 /home/ymcstore/giftshop.ymcstore.com/app/models/HomeModel.php(41): Database->query('SELECT * FROM y...')
-#1 /home/ymcstore/giftshop.ymcstore.com/app/controllers/Home.php(34): HomeModel->retriveUser('asd')
-#2 /home/ymcstore/giftshop.ymcstore.com/app/libraries/Core.php(55): Home->login()
-#3 /home/ymcstore/giftshop.ymcstore.com/public/index.php(8): Core->__construct()
-#4 {main}
-  thrown in /home/ymcstore/giftshop.ymcstore.com/app/libraries/Database.php on line 43
-[05-May-2020 04:27:56 UTC] PHP Warning:  Illegal string offset 'user_id' in /home/ymcstore/giftshop.ymcstore.com/app/helpers/session_helper.php on line 32
