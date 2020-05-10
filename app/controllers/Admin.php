@@ -380,9 +380,7 @@ class Admin extends Controller
             'title' => 'User List | YMC',
             'user_list' => $user_list
         ];
-
-        d($this->dbFunc->select('*', 'product', 'product_id', '1'));
-
+        
         $this->view('admin/user-list', $data);
     }
 }
