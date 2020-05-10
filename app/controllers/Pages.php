@@ -4,7 +4,7 @@ class Pages extends Controller
 {
     public function __construct()
     {
-
+        $this->dbFunc = $this->model('DbModel');
     }
 
     public function error()

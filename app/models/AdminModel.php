@@ -73,4 +73,10 @@ class AdminModel
 
         return $result;
     }
+
+    public function user_lists(){
+        $this->db->query("SELECT * FROM {$this->prefix}user WHERE email != 'admin'");
+
+        return $this->db->resultSet();
+    }
 }

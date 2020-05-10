@@ -5,6 +5,7 @@ class Admin extends Controller
 {
     public function __construct()
     {
+        $this->dbFunc = $this->model('DbModel');
         $this->adminModel = $this->model('AdminModel');
         $this->productModel = $this->model('ProductModel');
         $this->entity_id = $this->getUrl();
@@ -152,7 +153,6 @@ class Admin extends Controller
             'title' => 'Product | YMC'
         ];
         $data['product'] = $this->productModel->getProduct();
-
 
         $this->view('admin/product/product', $data);
     }
@@ -371,5 +371,18 @@ class Admin extends Controller
         }
 
         echo json_encode($data);
+    }
+
+    public function user_list(){
+        $user_list = $this->adminModel->user_lists();
+
+        $data = [
+            'title' => 'User List | YMC',
+            'user_list' => $user_list
+        ];
+
+        d($this->dbFunc->select('*', 'product', 'product_id', '1'));
+
+        $this->view('admin/user-list', $data);
     }
 }

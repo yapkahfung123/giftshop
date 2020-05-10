@@ -4,7 +4,7 @@ class App extends Controller
 {
     public function __construct()
     {
-        $this->adminModel = $this->model('AdminModel');
+        $this->dbFunc = $this->model('DbModel');
         $this->productModel = $this->model('ProductModel');
         $this->entity_id = $this->getUrl();
     }

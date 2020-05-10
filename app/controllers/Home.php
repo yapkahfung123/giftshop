@@ -4,6 +4,7 @@ class Home extends Controller
 {
     public function __construct()
     {
+        $this->dbFunc = $this->model('DbModel');
         $this->homeModel = $this->model('HomeModel');
     }
 
