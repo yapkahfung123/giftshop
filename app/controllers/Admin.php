@@ -170,7 +170,7 @@ class Admin extends Controller
                 $data[$key] = $value;
             }
             if(isset($_FILES)){
-                $save_img = save_image($_FILES);
+                $save_img = save_product_img($_FILES);
             }
 
             $data['img_upload'] = json_encode($save_img['img_upload']);
@@ -230,7 +230,7 @@ class Admin extends Controller
 
             //If user didnt upload anything, then take data from db
             if($_FILES['p_img']['name'][0] != ''){
-                $save_img = save_image($_FILES);
+                $save_img = save_product_img($_FILES);
             }else{
                 $save_img = array('img_upload' => json_decode($product->img_path));
             }
@@ -302,6 +302,12 @@ class Admin extends Controller
                 $data[$key] = $value;
             }
 
+            if(isset($_FILES)){
+                $save_img = save_category_image($_FILES);
+            }
+            $data['img_upload'] = $save_img['img_upload'][0];
+
+
             $category_add = $this->productModel->category($data, 'insert');
             if ($category_add == true) {
 
@@ -336,6 +342,12 @@ class Admin extends Controller
             foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }
+
+            if(isset($_FILES)){
+                $save_img = save_category_image($_FILES);
+            }
+            $data['img_upload'] = $save_img['img_upload'][0];
+
             $data['id'] = $this->entity_id;
 
             $product_add = $this->productModel->category($data, 'update');
@@ -354,6 +366,7 @@ class Admin extends Controller
             'title' => 'Category | YMC',
         ];
         $data['category'] = $category;
+        $data['id'] = $this->entity_id;
 
         $this->view('admin/category/edit', $data);
     }

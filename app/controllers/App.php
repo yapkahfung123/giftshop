@@ -53,36 +53,64 @@ class App extends Controller
     }
 
     public function delete_img()
+{
+//        check_adminSession();
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $product = $this->productModel->getProductByID($_POST['p_id']);
+
+        $product_img = $product->img_path;
+
+        $product_img = json_decode($product_img);
+
+        //search index
+        $product_index = array_search($_POST['img'], $product_img);
+
+        unset($product_img[$product_index]);
+
+        $product_img = array_values($product_img);
+
+        $result = json_encode($product_img);
+
+        //Update the file path
+        $this->productModel->updateImg($result, $_POST['p_id']);
+
+        //Delete pic from server
+        if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['img'])){
+            unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['img']);
+            $data['response'] = 'yes';
+        }else{
+            $data['response'] = 'file doesnt exist';
+        }
+
+        echo json_encode($data);
+    }
+}
+
+    public function delete_category_img()
     {
 //        check_adminSession();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $product = $this->productModel->getProductByID($_POST['p_id']);
+            $product = $this->productModel->getCategoryByID($_POST['p_id']);
 
             $product_img = $product->img_path;
 
-            $product_img = json_decode($product_img);
-
-            //search index
-            $product_index = array_search($_POST['img'], $product_img);
-
-            unset($product_img[$product_index]);
-
-            $product_img = array_values($product_img);
-
-            $result = json_encode($product_img);
-
             //Update the file path
-            $this->productModel->updateImg($result, $_POST['p_id']);
+            $this->dbFunc->update(array(
+                'img_path' => null
+            ), 'category', 'cat_id = ' . $_POST['p_id']);
 
-            //Delete pic from server
-            if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/' . $_POST['img'])){
-                unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/' . $_POST['img']);
+//            Delete pic from server
+            if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/' . $_POST['img'])){
+                unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/' . $_POST['img']);
                 $data['response'] = 'yes';
             }else{
-                $data['response'] = 'no';
+                $data['response'] = 'file doesnt exist';
             }
 
             echo json_encode($data);

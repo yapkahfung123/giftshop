@@ -25,7 +25,7 @@ require APPROOT .'/views/admin/inc/header.php';
 
 
                     <div class="card-body">
-                        <form action="" class="form-horizontal" role="form" method="post">
+                        <form action="" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name" class="col-sm-3 control-label">Category Name</label>
                                 <div class="col-sm-9">
@@ -46,6 +46,18 @@ require APPROOT .'/views/admin/inc/header.php';
                                     <input type="number" class="form-control" name="priority" value="99" required>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="tech" class="col-sm-3 control-label">Category Image <sup class="img-size">* 570px * 700px</sup></label>
+                                <div class="col-sm-3">
+                                    <div class="custom-file">
+                                        <input type="file" accept="image/*" name="p_img" class="custom-file-input p-Img" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tmp_image"></div>
 
                             <hr>
                             <div class="form-group">

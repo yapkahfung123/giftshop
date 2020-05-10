@@ -87,7 +87,7 @@ require APPROOT . '/views/admin/inc/header.php';
                             </div>
 
                             <div class="form-group">
-                                <label for="tech" class="col-sm-3 control-label">Product Image</label>
+                                <label for="tech" class="col-sm-3 control-label">Product Image <sup class="img-size">* 300px * 400px</sup></label>
                                 <div class="col-sm-3">
                                     <div class="custom-file">
                                         <input type="file" accept="image/*" name="p_img[]" multiple class="custom-file-input p-Img" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
@@ -105,7 +105,7 @@ require APPROOT . '/views/admin/inc/header.php';
                                 ?>
                                             <span class="prod_img">
                                                 <button class="cancelImg" type="button" onclick="deleteImg(this, '<?= $v ?>')">x</button>
-                                                <img src="<?= URLROOT . 'public/img/uploads/' . $v ?>" style="width: 10%; margin: 10px;">
+                                                <img src="<?= URLROOT . 'public/img/uploads/products/' . $v ?>" style="width: 10%; margin: 10px;">
                                             </span>
                                 <?php
                                     endforeach;

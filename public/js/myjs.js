@@ -102,7 +102,7 @@ $(document).ready(function () {
         i++;
         var append_to = $('#modal-variation');
 
-        var src = '<div class="row" id="row'+ i +'">\n' +
+        var src = '<div class="row" id="row' + i + '">\n' +
             '<div class="col-md-6">\n' +
             '<div class="col-sm-9">\n' +
             '<input type="text" class="form-control variation" name="variation[]" placeholder="Color, Size etc..." required>\n' +
@@ -111,9 +111,9 @@ $(document).ready(function () {
             '<div class="col-md-4">\n' +
             '<input type="text" class="form-control variation_attr" name="variation_attr[]" placeholder="Red, Blue..." required>\n' +
             '</div>\n' +
-            '<div class="col-md-1">\n'+
-            '<button id="'+i+'" class="btn btn-danger btn_remove">x</button>\n'+
-            '</div>\n'+
+            '<div class="col-md-1">\n' +
+            '<button id="' + i + '" class="btn btn-danger btn_remove">x</button>\n' +
+            '</div>\n' +
             '</div>';
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
@@ -128,7 +128,6 @@ $(document).ready(function () {
 $('.btn_remove_dom').click(function () {
     $(this).closest('.row').remove();
 })
-
 
 
 $(document).ready(function () {
@@ -158,8 +157,8 @@ $(document).ready(function () {
 })
 
 function deleteImg(el, id) {
-var p_id = $('#img_delete_p_id').val();
-var element = el;
+    var p_id = $('#img_delete_p_id').val();
+    var element = el;
 
     $.ajax({
         url: '/app/delete_img',
@@ -167,7 +166,25 @@ var element = el;
         data: {"img": id, "p_id": p_id},
         success: function (response) {
             data = JSON.parse(response);
-            if(data.response == 'yes'){
+            if (data.response == 'yes') {
+                element.closest('span').remove();
+            }
+        }
+    })
+}
+
+function deleteCatImg(el, id, category_id) {
+    var p_id = category_id;
+    var element = el;
+
+
+    $.ajax({
+        url: '/app/delete_category_img',
+        method: 'post',
+        data: {"img": id, "p_id": p_id},
+        success: function (response) {
+            data = JSON.parse(response);
+            if (data.response == 'yes') {
                 element.closest('span').remove();
             }
         }

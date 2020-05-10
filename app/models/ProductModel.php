@@ -68,14 +68,15 @@ class ProductModel
     public function category($category, $type)
     {
         if ($type == 'insert') {
-            $this->db->query("INSERT INTO {$this->prefix}category (cat_name, cat_desc, priority) VALUES (:cat_name, :cat_desc, :priority)");
+            $this->db->query("INSERT INTO {$this->prefix}category (cat_name, cat_desc, img_path, priority) VALUES (:cat_name, :cat_desc, :img_path, :priority)");
         } elseif ($type == 'update') {
-            $this->db->query("UPDATE {$this->prefix}category SET cat_name = :cat_name, cat_desc = :cat_desc, priority = :priority WHERE cat_id = {$category['id']}");
+            $this->db->query("UPDATE {$this->prefix}category SET cat_name = :cat_name, cat_desc = :cat_desc, img_path = :img_path, priority = :priority WHERE cat_id = {$category['id']}");
         }
 
 
         $this->db->bind('cat_name', $category['c_name']);
         $this->db->bind('cat_desc', $category['c_description']);
+        $this->db->bind('img_path', $category['img_upload']);
         $this->db->bind('priority', $category['priority']);
 
         $result = $this->db->execute();
