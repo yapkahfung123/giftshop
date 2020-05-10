@@ -14,6 +14,12 @@ require APPROOT . '/views/admin/inc/header.php';
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
+                <?php
+                if(isset($_SESSION['success_msg'])){
+                    flash_template($_SESSION['success_msg'], 'alert alert-success', 'text-align: center');
+                }unset($_SESSION['success_msg']);
+                ?>
+
                 <!-- Page Heading -->
                 <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
 
