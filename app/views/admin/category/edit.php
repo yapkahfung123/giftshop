@@ -79,11 +79,15 @@ require APPROOT . '/views/admin/inc/header.php';
 
                             <hr>
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <a href="<?= URLROOT . 'admin/category' ?>">
-                                        <button type="button" class="btn btn-secondary ml-4">Go Back</button>
-                                    </a>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="<?= URLROOT . 'admin/category' ?>">
+                                                <button type="button" class="btn btn-secondary">Go Back</button>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                         </form>
                     </div>

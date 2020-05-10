@@ -103,15 +103,13 @@ $(document).ready(function () {
         var append_to = $('#modal-variation');
 
         var src = '<div class="row" id="row' + i + '">\n' +
-            '<div class="col-md-6">\n' +
-            '<div class="col-sm-9">\n' +
+            '<div class="col-md-6 col-5">\n' +
             '<input type="text" class="form-control variation" name="variation[]" placeholder="Color, Size etc..." required>\n' +
             '</div>\n' +
-            '</div>\n' +
-            '<div class="col-md-4">\n' +
+            '<div class="col-md-4 col-5">\n' +
             '<input type="text" class="form-control variation_attr" name="variation_attr[]" placeholder="Red, Blue..." required>\n' +
             '</div>\n' +
-            '<div class="col-md-1">\n' +
+            '<div class="col-md-2 col-2">\n' +
             '<button id="' + i + '" class="btn btn-danger btn_remove">x</button>\n' +
             '</div>\n' +
             '</div>';

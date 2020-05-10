@@ -87,10 +87,13 @@ require APPROOT . '/views/admin/inc/header.php';
                             </div>
 
                             <div class="form-group">
-                                <label for="tech" class="col-sm-3 control-label">Product Image <sup class="img-size">* 300px * 400px</sup></label>
+                                <label for="tech" class="col-sm-3 control-label">Product Image <sup class="img-size">*
+                                        300px * 400px</sup></label>
                                 <div class="col-sm-3">
                                     <div class="custom-file">
-                                        <input type="file" accept="image/*" name="p_img[]" multiple class="custom-file-input p-Img" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                        <input type="file" accept="image/*" name="p_img[]" multiple
+                                               class="custom-file-input p-Img" id="inputGroupFile01"
+                                               aria-describedby="inputGroupFileAddon01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>
@@ -99,27 +102,33 @@ require APPROOT . '/views/admin/inc/header.php';
                             <div class="tmp_image">
                                 <input type="hidden" id="img_delete_p_id" value="<?= $data['id'] ?>">
                                 <?php
-                                if(isset($data['product']->img_path)) :
+                                if (isset($data['product']->img_path)) :
                                     $img_decode = json_decode($data['product']->img_path);
                                     foreach ($img_decode as $k => $v) :
-                                ?>
-                                            <span class="prod_img">
-                                                <button class="cancelImg" type="button" onclick="deleteImg(this, '<?= $v ?>')">x</button>
-                                                <img src="<?= URLROOT . 'public/img/uploads/products/' . $v ?>" style="width: 10%; margin: 10px;">
+                                        ?>
+                                        <span class="prod_img">
+                                                <button class="cancelImg" type="button"
+                                                        onclick="deleteImg(this, '<?= $v ?>')">x</button>
+                                                <img src="<?= URLROOT . 'public/img/uploads/products/' . $v ?>"
+                                                     style="width: 10%; margin: 10px;">
                                             </span>
-                                <?php
+                                    <?php
                                     endforeach;
-                                    endif;
+                                endif;
                                 ?>
                             </div>
 
                             <hr>
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <a href="<?= URLROOT . 'admin/product' ?>">
-                                        <button type="button" class="btn btn-secondary ml-4">Go Back</button>
-                                    </a>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="<?= URLROOT . 'admin/product' ?>">
+                                                <button type="button" class="btn btn-secondary">Go Back</button>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -153,20 +162,18 @@ require APPROOT . '/views/admin/inc/header.php';
                                 foreach ($data['variation'] as $key => $value) :
                                     ?>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control variation" name="variation[]"
-                                                       placeholder="Color, Size etc..." value="<?= $key ?>" required>
-                                            </div>
+                                        <div class="col-md-6 col-5">
+                                            <input type="text" class="form-control variation" name="variation[]"
+                                                   placeholder="Color, Size etc..." value="<?= $key ?>" required>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-5">
                                             <input type="text" class="form-control variation_attr"
                                                    name="variation_attr[]"
                                                    placeholder="Red, Blue..." value="<?= $value ?>" required>
                                         </div>
 
-                                        <div class="col-md-1">
+                                        <div class="col-md-2 col-2">
                                             <button type="button" class="btn btn-danger btn_remove_dom">x</button>
                                         </div>
                                     </div>
