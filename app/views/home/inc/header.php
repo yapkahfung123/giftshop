@@ -20,10 +20,12 @@
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/animate.min.css" />
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="<?= URLROOT ?>public/img/favicon.ico">
-    <link rel="apple-touch-icon" href="<?= URLROOT ?>public/img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="<?= URLROOT ?>public/img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="<?= URLROOT ?>public/img/apple-touch-icon-114x114.png">
+    <link rel="icon" type="image/png" href="<?= URLROOT ?>public/img/home-favicon.png">
+
+    <!--    <link rel="shortcut icon" href="--><?//= URLROOT ?><!--public/img/favicon.ico">-->
+<!--    <link rel="apple-touch-icon" href="--><?//= URLROOT ?><!--public/img/apple-touch-icon.png">-->
+<!--    <link rel="apple-touch-icon" sizes="72x72" href="--><?//= URLROOT ?><!--public/img/apple-touch-icon-72x72.png">-->
+<!--    <link rel="apple-touch-icon" sizes="114x114" href="--><?//= URLROOT ?><!--public/img/apple-touch-icon-114x114.png">-->
 
 </head>
 
