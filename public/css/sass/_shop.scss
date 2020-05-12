@@ -1208,6 +1208,99 @@ abbr.required {
 
 
 /*-------------------------------------------------------*/
+/* My Account
+/*-------------------------------------------------------*/
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  float: left;
+  width: 30%;
+}
+
+.woocommerce-MyAccount-navigation {
+  margin-bottom: 34px;
+}
+
+@include bp-md {
+  .woocommerce-account .woocommerce-MyAccount-content {
+    width: 65%;
+  }
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+  float: right;
+  width: 68%;
+}
+
+@media only screen and (max-width: 768px) {
+  .woocommerce-account .woocommerce-MyAccount-content, .woocommerce-account .woocommerce-MyAccount-navigation {
+      float: none;
+      width: 100%;
+  }
+}
+
+
+
+.woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.woocommerce-MyAccount-navigation li {
+    padding-bottom: 6px;
+}
+
+.woocommerce-MyAccount-navigation li a {
+    color: #000000;
+}
+
+.woocommerce-MyAccount-navigation-link.is-active a,
+.woocommerce-MyAccount-navigation-link a:hover,
+.woocommerce-MyAccount-navigation-link a:focus {
+    color: $main-color;
+}
+
+.woocommerce form .form-row {
+    padding: 6px 0;
+}
+
+.woocommerce form .form-row {
+    padding: 3px;
+    margin: 0 0 6px;
+}
+
+.woocommerce form .form-row-first, .woocommerce-page form .form-row-first {
+    float: left;
+}
+
+.woocommerce form .form-row-last, .woocommerce-page form .form-row-last {
+    float: right;
+}
+
+.woocommerce form .form-row-first, .woocommerce form .form-row-last, .woocommerce-page form .form-row-first, .woocommerce-page form .form-row-last {
+    width: 48%;
+    overflow: visible;
+}
+
+.woocommerce form .form-row-wide, .woocommerce-page form .form-row-wide {
+    clear: both;
+}
+
+
+.woocommerce form .form-row::after, .woocommerce form .form-row::before, .woocommerce-page form .form-row::after, .woocommerce-page form .form-row::before {
+    content: ' ';
+    display: table;
+}
+
+.woocommerce form .form-row::after, .woocommerce-page form .form-row::after {
+    clear: both;
+}
+
+.woocommerce-account .woocommerce::after, .woocommerce-account .woocommerce::before {
+    content: ' ';
+    display: table;
+}
+
+
+/*-------------------------------------------------------*/
 /* Quickview
 /*-------------------------------------------------------*/
 

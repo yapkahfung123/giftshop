@@ -32,13 +32,13 @@ function setUserSession($data){
 }
 
 function check_adminSession(){
-    if(!isset($_SESSION['user_id']) && !isset($_SESSION['user_name']) && !isset($_SESSION['name']) && $_SESSION['user_name'] != 'admin'){
+    if(!isset($_SESSION['admin_id']) && !isset($_SESSION['user_name']) && !isset($_SESSION['name']) && $_SESSION['user_name'] != 'admin'){
         redirect('admin/login');
     }
 }
 
 function create_admin_session($user){
-    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['admin_id'] = $user['id'];
     $_SESSION['user_name'] = $user['username'];
     $_SESSION['name'] = $user['name'];
 }

@@ -56,4 +56,13 @@ class HomeModel
             return false;
         }
     }
+
+    public function getUser(){
+
+        $this->db->query("SELECT * FROM {$this->prefix}user WHERE user_id = :id");
+
+        $this->db->bind("id", $_SESSION['user_id']);
+
+        return $this->db->resultSet()[0];
+    }
 }

@@ -85,11 +85,38 @@ class Home extends Controller
             redirect('home/login');
         }
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = array();
+
+            foreach ($_POST as $key => $value) {
+                $data[$key] = $value;
+            }
+            $data['success'] = '';
+            $data['title'] = 'My Account | YMC';
+
+            $result = $this->dbFunc->update(array(
+                'firstname' => $data['account_first_name'],
+                'lastname' => $data['account_last_name'],
+            ), 'user', 'user_id = ' . $_SESSION['user_id']);
+
+            if($result == true){
+                $data['data'] = $this->homeModel->getUser();
+
+                $data['success'] = "Information Update Successfully";
+                $this->view('home/account/account', $data);
+            }
+            redirect('home/account');
+        }
+
         $data = [
-            'title' => 'My Account | YMC'
+            'title' => 'My Account | YMC',
+            'data' => $this->homeModel->getUser()
         ];
 
-        $this->view('home/account', $data);
+        $this->view('home/account/account', $data);
     }
 
     public function categories()
