@@ -13,6 +13,7 @@ class Database{
     private $user = DB_USER;
     private $pass = DB_PASS;
     private $dbname = DB_NAME;
+    public  $prefix = 'ymc_';
     
     private $dbh;
     private $stmt;

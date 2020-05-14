@@ -141,10 +141,6 @@
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
                                     <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="faq.html">F.A.Q</a></li>
-                                    <li><a href="404.html">404</a></li>
                                 </ul>
                             </li>
 
@@ -154,47 +150,23 @@
                                     <li>
                                         <div class="megamenu-wrap">
                                             <div class="row">
-
                                                 <div class="col-md-3 megamenu-item">
-                                                    <h6>For Man</h6>
                                                     <ul class="menu-list">
-                                                        <li><a href="#">Shirts</a></li>
-                                                        <li><a href="#">Jeans</a></li>
-                                                        <li><a href="#">Accessories</a></li>
-                                                        <li><a href="#">Shoes</a></li>
+                                                        <?php foreach (get_category() as $k => $v) : ?>
+                                                            <li><a href="#"><?= $v->cat_name ?></a></li>
+                                                        <?php endforeach; ?>
                                                     </ul>
                                                 </div>
 
-                                                <div class="col-md-3 megamenu-item">
-                                                    <h6>For Woman</h6>
-                                                    <ul class="menu-list">
-                                                        <li><a href="#">Dresses</a></li>
-                                                        <li><a href="#">Coats</a></li>
-                                                        <li><a href="#">Accessories</a></li>
-                                                        <li><a href="#">Sandals</a></li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="col-md-3 megamenu-item">
-                                                    <h6>Accessories</h6>
-                                                    <ul class="menu-list">
-                                                        <li><a href="#">Wallets</a></li>
-                                                        <li><a href="#">Watches</a></li>
-                                                        <li><a href="#">Belts</a></li>
-                                                        <li><a href="#">Scarfs</a></li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="col-md-3 megamenu-item">
-                                                    <h6>Bags</h6>
-                                                    <ul class="menu-list">
-                                                        <li><a href="#">Leather</a></li>
-                                                        <li><a href="#">Sports</a></li>
-                                                        <li><a href="#">Street Style</a></li>
-                                                        <li><a href="#">Creative</a></li>
-                                                    </ul>
-                                                </div>
-
+<!--                                                <div class="col-md-3 megamenu-item">-->
+<!--                                                    <h6>For Woman</h6>-->
+<!--                                                    <ul class="menu-list">-->
+<!--                                                        <li><a href="#">Dresses</a></li>-->
+<!--                                                        <li><a href="#">Coats</a></li>-->
+<!--                                                        <li><a href="#">Accessories</a></li>-->
+<!--                                                        <li><a href="#">Sandals</a></li>-->
+<!--                                                    </ul>-->
+<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </li>
@@ -205,7 +177,7 @@
                                 <a href="#">Shop</a>
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<?= URLROOT . 'home/categories' ?>">Catalog</a></li>
+                                    <li><a href="<?= URLROOT . 'home/all_products' ?>">All Products</a></li>
                                     <li><a href="<?= URLROOT . 'home/collections' ?>">Collections</a></li>
                                     <li><a href="<?= URLROOT . 'home/product' ?>">Single Product</a></li>
                                     <li><a href="<?= URLROOT . 'home/cart' ?>">Cart</a></li>

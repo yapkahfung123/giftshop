@@ -13,7 +13,7 @@
             <a href="<?= URLROOT ?>home/account">Account details</a>
         </li>
         <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout">
-            <a href="#">Logout</a>
+            <a href="<?= URLROOT ?>home/logout">Logout</a>
         </li>
     </ul>
 </nav>

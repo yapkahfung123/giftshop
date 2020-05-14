@@ -20,7 +20,7 @@ class Admin extends Controller
             'title' => 'YMC | Admin'
         ];
 
-        $data['name'] = ucfirst($this->adminModel->get_name($_SESSION['user_id'])->firstname);
+        $data['name'] = ucfirst($this->adminModel->get_name($_SESSION['admin_id'])->firstname);
 
         return $this->view('admin/index', $data);
     }
@@ -395,5 +395,13 @@ class Admin extends Controller
         ];
         
         $this->view('admin/user-list', $data);
+    }
+
+    public function options(){
+        $data = [
+            'title' => 'Options | YMC',
+        ];
+
+        $this->view('admin/options', $data);
     }
 }

@@ -6,12 +6,16 @@ class Home extends Controller
     {
         $this->dbFunc = $this->model('DbModel');
         $this->homeModel = $this->model('HomeModel');
+        $this->productModel = $this->model('ProductModel');
     }
 
     public function index()
     {
+        $categories = $this->productModel->getCategory();
+
         $data = [
             'title' => 'GiftShop | YMC',
+            'categories' => $categories
         ];
 
         $this->view('home/index', $data);
@@ -31,14 +35,18 @@ class Home extends Controller
                 "error_msg" => ''
             ];
 
+
             // If have data at backend
             $user_data = $this->homeModel->retriveUser($data['email']);
 
             if ($user_data == false) {
                 $data['error_msg'] = "Login Failed! Invalid Combination";
-            } else {
+                $this->view('home/login', $data);
+            }
+
+            if($user_data) {
                 if (password_verify($data['password'], $user_data->password)) {
-                    //Set Cookie for remember password
+//                    Set Cookie for remember password
                     if ($data['remember'] == 'on') {
                         setcookie('user_email', $data['email'], time() + (10 * 365 * 24 * 60 * 60));
                         setcookie('user_pword', $data['password'], time() + (10 * 365 * 24 * 60 * 60));
@@ -56,6 +64,7 @@ class Home extends Controller
                     redirect('home/account');
                 } else {
                     $data['error_msg'] = "Login Failed! Invalid Combination";
+                    $this->view('home/login', $data);
                 }
             }
 
@@ -119,13 +128,15 @@ class Home extends Controller
         $this->view('home/account/account', $data);
     }
 
-    public function categories()
+    public function all_products()
     {
+        $products = $this->productModel->getProduct();
         $data = [
-            'title' => 'Categories | YMC'
+            'title' => 'Categories | YMC',
+            'products' => $products
         ];
 
-        $this->view('home/categories', $data);
+        $this->view('home/products', $data);
     }
 
     public function checkout()

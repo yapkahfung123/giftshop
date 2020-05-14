@@ -1,4 +1,7 @@
 <?php
+require_once APPROOT . '/libraries/Database.php';
+$db = new Database();
+
 
 function flash_template($session, $class, $style = null)
 {
@@ -16,6 +19,7 @@ function dd(...$vars)
 
 function save_product_img($img)
 {
+    require_once APPROOT . '/helpers/pic_resize.php';
     $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/';
     $error = array();
 
@@ -40,7 +44,13 @@ function save_product_img($img)
             }
 
             if ($uploadOk == 1) {
-                move_uploaded_file($img['p_img']['tmp_name'][$key], $target_file);
+                // Provide a filename
+                $resize = new ResizeImage($img['p_img']['tmp_name'][$key]);
+                // Resize the image
+                $resize->resizeTo(300, 400, 'exact');
+
+                //Save resize img file
+                $resize->saveImage($target_file);
                 array_push($img_upload, $temp_filename);
             }
 //            if (move_uploaded_file($img['p_img']['tmp_name'][$key], $target_file)) {
@@ -56,6 +66,8 @@ function save_product_img($img)
 
 function save_category_image($img)
 {
+    require_once APPROOT . '/helpers/pic_resize.php';
+
     $error = array();
 
     $img_upload = array();
@@ -79,11 +91,26 @@ function save_category_image($img)
         }
 
         if ($uploadOk == 1) {
-            move_uploaded_file($img['p_img']['tmp_name'], $target_file);
+            // Provide a filename
+            $resize = new ResizeImage($img['p_img']['tmp_name']);
+            // Resize the image
+            $resize->resizeTo(570, 700);
+
+            //Save resize img file
+            $resize->saveImage($target_file);
             array_push($img_upload, $temp_filename);
         }
     }
 
     return array('error' => $error, 'img_upload' => $img_upload);
 
+}
+
+function get_category(){
+    global $db;
+    $db->query("SELECT * FROM {$db->prefix}category WHERE status = 1 ORDER BY priority DESC");
+
+    $result = $db->resultSet();
+
+    return $result;
 }

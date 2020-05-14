@@ -40,7 +40,7 @@ class ProductModel
 
     public function getProduct()
     {
-        $this->db->query("SELECT * FROM {$this->prefix}product WHERE status = 1 ORDER BY created_at DESC");
+        $this->db->query("SELECT * FROM {$this->prefix}product WHERE status = 1 ORDER BY priority DESC");
 
         $result = $this->db->resultSet();
 
@@ -90,7 +90,7 @@ class ProductModel
 
     public function getCategory()
     {
-        $this->db->query("SELECT * FROM {$this->prefix}category WHERE status = 1 ORDER BY created_at DESC");
+        $this->db->query("SELECT * FROM {$this->prefix}category WHERE status = 1 ORDER BY priority DESC");
 
         $result = $this->db->resultSet();
 
