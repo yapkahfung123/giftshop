@@ -130,13 +130,32 @@ class Home extends Controller
 
     public function all_products()
     {
-        $products = $this->productModel->getProduct();
+        if(!isset($_GET['page'])){
+            $page = 1;
+        }else{
+            $page = $_GET['page'];
+        }
+
+        $category = null;
+        if(isset($_GET['category_id'])){
+            $category = $_GET['category_id'];
+        }
+
+        $limit = 3;
+        $start = ($page - 1)*$limit;
+
+        $products = $this->productModel->getProducts($start, $limit, $category);
+        $totalProducts = getProductsRowCount($category);
+        $total_pages = ceil($totalProducts/$limit);
+
         $data = [
             'title' => 'Categories | YMC',
-            'products' => $products
+            'products' => $products,
+            'pagination' => ['page'=>$page, 'totalPages' => $total_pages, 'totalProducts' => $totalProducts],
+            'category_id' => $category
         ];
 
-        $this->view('home/products', $data);
+        $this->view('home/products', $data, );
     }
 
     public function checkout()

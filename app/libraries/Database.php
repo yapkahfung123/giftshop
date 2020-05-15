@@ -69,6 +69,15 @@ class Database{
     }
     
     //Execute the prepared statement
+
+    public function debug(){
+        ob_start();
+        $this->stmt->debugDumpParams();
+        $r = ob_get_contents();
+        ob_end_clean();
+
+        !d($r);
+    }
     
     public function execute(){
         return $this->stmt->execute();

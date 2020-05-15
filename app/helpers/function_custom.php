@@ -114,3 +114,47 @@ function get_category(){
 
     return $result;
 }
+
+function getProductsRowCount($category = null){
+    global $db;
+
+    if(isset($category) && !empty($category)){
+        $category = ' AND product_category = ' . $category;
+    }
+
+    $db->query("SELECT * FROM {$db->prefix}product WHERE status = 1{$category}");
+
+    $db->resultSet();
+    return $db->rowCount();
+
+}
+
+function paginationProductUrl($category_id = null, $page, $prevOrNext = null){
+
+    switch ($prevOrNext){
+        Case 'prev':
+            if($category_id != null){
+                $url = '?category_id=' . $category_id . '&page=' . ($page - 1);
+            }else{
+                $url = '?page=' . $page;
+            }
+        break;
+
+        Case 'next':
+            if($category_id != null){
+                $url = '?category_id=' . $category_id . '&page=' . ($page + 1);
+            }else{
+                $url = '?page=' . $page;
+            }
+        break;
+
+        default:
+            if($category_id != null){
+                $url = '?category_id=' . $_GET['category_id'] . '&page=' . $page;
+            }else{
+                $url = '?page=' . $page;
+            }
+    }
+
+    return $url;
+}

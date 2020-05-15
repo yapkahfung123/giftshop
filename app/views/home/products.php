@@ -20,16 +20,18 @@
 
             <div class="col-md-9 catalogue-col right mb-50">
 
-                <!-- Banner -->
-                <div class="banner-wrap relative">
-                    <img src="<?= URLROOT ?>public/img/banner.jpg" alt="">
-                    <div class="hero-holder text-center right-align">
-                        <div class="hero-lines mb-0">
-                            <h1 class="hero-heading white">Women Collection</h1>
-                            <h4 class="hero-subheading white uppercase">HOT AND FRESH TRENDS OF THIS YEAR</h4>
+                <?php if (isset($_GET['page']) && $_GET['page'] <= 1): ?>
+                    <!-- Banner -->
+                    <div class="banner-wrap relative">
+                        <img src="<?= URLROOT ?>public/img/banner.jpg" alt="">
+                        <div class="hero-holder text-center right-align">
+                            <div class="hero-lines mb-0">
+                                <h1 class="hero-heading white">Women Collection</h1>
+                                <h4 class="hero-subheading white uppercase">HOT AND FRESH TRENDS OF THIS YEAR</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <!--                <div class="shop-filter">-->
                 <!--                    <p class="result-count">Showing: 1-12 of 80 results</p>-->
@@ -98,21 +100,53 @@
                             </div>
 
                         <?php endforeach; ?>
+
                     </div> <!-- end row -->
                 </div> <!-- end grid mode -->
 
                 <div class="clear"></div>
 
-                <!-- Pagination -->
+                <!--                 Pagination-->
+                <!--                <div class="pagination-wrap">-->
+                <!--                    <p class="result-count">Showing: 1-12 of 80 results</p>-->
+                <!--                    <nav class="pagination right clear">-->
+                <!--                        <a href="#"><i class="fa fa-angle-left"></i></a><span class="page-numbers current">-->
+                <!--                1</span><a href="#">-->
+                <!--                            2</a><a href="#">-->
+                <!--                            3</a><a href="#">-->
+                <!--                            4</a><a href="#">-->
+                <!--                            <i class="fa fa-angle-right"></i></a>-->
+                <!--                    </nav>-->
+                <!--                </div>-->
+
                 <div class="pagination-wrap">
-                    <p class="result-count">Showing: 1-12 of 80 results</p>
+                    <p class="result-count">
+                        Showing: <?php echo $data['pagination']['page'] . ' / ' . $data['pagination']['totalPages'] . ' of ' . $data['pagination']['totalProducts'] . ' results' ?></p>
                     <nav class="pagination right clear">
-                        <a href="#"><i class="fa fa-angle-left"></i></a><span class="page-numbers current">
-                1</span><a href="#">
-                            2</a><a href="#">
-                            3</a><a href="#">
-                            4</a><a href="#">
-                            <i class="fa fa-angle-right"></i></a>
+                        <?php
+                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'prev')
+                        ?>
+                        <a href="<?= ($data['pagination']['page'] == 1) ? 'javascript:void(0)' : $url ?>">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+
+                        <?php
+
+                        for ($p = 1; $p <= $data['pagination']['totalPages']; $p++) :
+                            $url = paginationProductUrl($data['category_id'], $p)
+                        ?>
+
+                            <a href="<?= $url ?>"><span style="display: contents" class="<?= ($data['pagination']['page'] == $p) ? 'page-numbers current' : '' ?>"><?= $p; ?></span></a>
+
+                        <?php endfor; ?>
+
+                        <?php
+                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'next')
+                        ?>
+
+                        <a href="<?= ($data['pagination']['page'] == $data['pagination']['totalPages']) ? 'javascript:void(0)' : $url ?>">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
                     </nav>
                 </div>
 
@@ -127,7 +161,7 @@
                     <ul class="list-no-dividers">
                         <?php foreach (get_category() as $k => $v): ?>
                             <li>
-                                <a href="#"><?= $v->cat_name ?></a>
+                                <a href="?category_id=<?= $v->cat_id ?>"><?= $v->cat_name ?></a>
                             </li>
                         <?php endforeach; ?>
                     </ul>

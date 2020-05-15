@@ -47,6 +47,20 @@ class ProductModel
         return $result;
     }
 
+    public function getProducts($start, $limit, $category = null)
+    {
+        if(isset($category) && !empty($category)){
+            $category = ' AND product_category = ' . $category;
+        }
+
+        $this->db->query("SELECT * FROM {$this->prefix}product WHERE status = 1{$category} ORDER BY priority DESC LIMIT :start, :limit");
+
+        $this->db->bind('start', $start);
+        $this->db->bind('limit', $limit);
+
+        $result = $this->db->resultSet();
+        return $result;
+    }
     public function getProductByID($id)
     {
         $this->db->query("SELECT * FROM {$this->prefix}product WHERE product_id = :id");
