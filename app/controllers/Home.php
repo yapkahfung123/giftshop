@@ -155,7 +155,7 @@ class Home extends Controller
             'category_id' => $category
         ];
 
-        $this->view('home/products', $data, );
+        $this->view('home/products', $data);
     }
 
     public function checkout()

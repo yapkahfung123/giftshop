@@ -131,29 +131,30 @@ function getProductsRowCount($category = null){
 
 function paginationProductUrl($category_id = null, $page, $prevOrNext = null){
 
-    switch ($prevOrNext){
+    switch ($prevOrNext) {
         Case 'prev':
-            if($category_id != null){
+            if ($category_id != null) {
                 $url = '?category_id=' . $category_id . '&page=' . ($page - 1);
-            }else{
-                $url = '?page=' . $page;
+            } else {
+                $url = '?page=' . ($page - 1);
             }
-        break;
+            break;
 
         Case 'next':
-            if($category_id != null){
-                $url = '?category_id=' . $category_id . '&page=' . ($page + 1);
-            }else{
-                $url = '?page=' . $page;
+            if ($category_id != null) {
+                $url = '?category_id=' . $category_id . '&page=123' . ($page + 1);
+            } else {
+                $url = '?page=' . ($page + 1);
             }
-        break;
+            break;
 
         default:
-            if($category_id != null){
+            if ($category_id != null) {
                 $url = '?category_id=' . $_GET['category_id'] . '&page=' . $page;
-            }else{
+            } else {
                 $url = '?page=' . $page;
             }
+            break;
     }
 
     return $url;

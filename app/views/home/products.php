@@ -141,7 +141,7 @@
                         <?php endfor; ?>
 
                         <?php
-                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'next')
+                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'next');
                         ?>
 
                         <a href="<?= ($data['pagination']['page'] == $data['pagination']['totalPages']) ? 'javascript:void(0)' : $url ?>">
