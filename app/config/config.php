@@ -6,6 +6,8 @@ define('DB_PASS', 'qu41yN5#');
 define('DB_NAME', 'ymcstore_giftshop_db');
 
 
+//SHOW ERROR
+define('DEBUG', false);
 
 // APP ROOT
 define('APPROOT', dirname(dirname(__FILE__)));
