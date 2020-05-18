@@ -92,7 +92,7 @@ require APPROOT . '/views/admin/inc/header.php';
                                     <div class="custom-file">
                                         <input type="file" accept="image/*" name="p_img[]" multiple
                                                class="custom-file-input p-Img" id="inputGroupFile01"
-                                               aria-describedby="inputGroupFileAddon01">
+                                               aria-describedby="inputGroupFileAddon01" required>
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>

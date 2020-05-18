@@ -154,7 +154,7 @@ class Home extends Controller
             'pagination' => ['page'=>$page, 'totalPages' => $total_pages, 'totalProducts' => $totalProducts],
             'category_id' => $category
         ];
-
+        
         $this->view('home/products', $data);
     }
 
@@ -178,8 +178,12 @@ class Home extends Controller
 
     public function collections()
     {
+        $categories = $this->productModel->getCategory();
+
+
         $data = [
-            'title' => 'Collection | YMC'
+            'title' => 'Collection | YMC',
+            'categories' => $categories
         ];
 
         $this->view('home/collections', $data);

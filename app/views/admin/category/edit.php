@@ -54,7 +54,7 @@ require APPROOT . '/views/admin/inc/header.php';
                                 <label for="tech" class="col-sm-3 control-label">Category Image <sup class="img-size">* 570px * 700px</sup></label>
                                 <div class="col-sm-3">
                                     <div class="custom-file">
-                                        <input type="file" accept="image/*" name="p_img" class="custom-file-input p-Img" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                        <input type="file" accept="image/*" value="hi" name="p_img" class="custom-file-input p-Img" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                 </div>

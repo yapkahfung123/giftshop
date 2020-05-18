@@ -228,6 +228,7 @@ class Admin extends Controller
                 $data[$key] = $value;
             }
 
+
             //If user didnt upload anything, then take data from db
             if($_FILES['p_img']['name'][0] != ''){
                 $save_img = save_product_img($_FILES);
@@ -341,11 +342,19 @@ class Admin extends Controller
             foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }
+            $save_img['img_upload'][0] = $category->img_path;
 
-            if(isset($_FILES)){
+            //If user didnt upload anything, then take data from db
+
+            if($_FILES['p_img']['name'] != ''){
                 $save_img = save_category_image($_FILES);
+            }else{
+                $save_img['img_upload'][0] = $category->img_path;
             }
+
             $data['img_upload'] = $save_img['img_upload'][0];
+
+
 
             $data['id'] = $this->entity_id;
 

@@ -94,7 +94,7 @@ function save_category_image($img)
             // Provide a filename
             $resize = new ResizeImage($img['p_img']['tmp_name']);
             // Resize the image
-            $resize->resizeTo(570, 700);
+            $resize->resizeTo(570, 700, 'exact');
 
             //Save resize img file
             $resize->saveImage($target_file);
@@ -142,7 +142,7 @@ function paginationProductUrl($category_id = null, $page, $prevOrNext = null){
 
         Case 'next':
             if ($category_id != null) {
-                $url = '?category_id=' . $category_id . '&page=123' . ($page + 1);
+                $url = '?category_id=' . $category_id . '&page=' . ($page + 1);
             } else {
                 $url = '?page=' . ($page + 1);
             }

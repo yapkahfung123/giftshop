@@ -6,38 +6,20 @@
 <section class="section-wrap">
     <div class="container">
         <div class="row row-10">
+            <?php foreach ($data['categories'] as $k => $v) : ?>
             <div class="col-sm-6">
-                <a href="shop-catalog.html" class="collection-item">
-                    <img src="img/shop/collection_1.jpg" alt="">
+                <a href="<?= URLROOT ?>home/all_products?category_id=<?= $v->cat_id ?>" class="collection-item">
+                    <?php if (empty($v->img_path)){ ?>
+                        <img src="<?= URLROOT ?>public/img/no-img.jpg" alt="">
+                    <?php }else{?>
+                        <img src="<?= URLROOT ?>public/img/uploads/category/<?= $v->img_path ?>" alt="">
+                    <?php } ?>
                     <div class="overlay">
-                        <h2 class="uppercase">Dresses</h2>
+                        <h2 class="uppercase"><?= $v->cat_name ?></h2>
                     </div>
                 </a>
             </div>
-            <div class="col-sm-6">
-                <a href="shop-catalog.html" class="collection-item">
-                    <img src="img/shop/collection_2.jpg" alt="">
-                    <div class="overlay">
-                        <h2 class="uppercase">Bags</h2>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-6">
-                <a href="shop-catalog.html" class="collection-item">
-                    <img src="img/shop/collection_3.jpg" alt="">
-                    <div class="overlay">
-                        <h2 class="uppercase">Shoes</h2>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-6">
-                <a href="shop-catalog.html" class="collection-item">
-                    <img src="img/shop/collection_4.jpg" alt="">
-                    <div class="overlay">
-                        <h2 class="uppercase">Jackets</h2>
-                    </div>
-                </a>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section
