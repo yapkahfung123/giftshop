@@ -43,6 +43,7 @@ require APPROOT .'/views/admin/inc/header.php';
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Price</th>
+                                    <th>Discount Price</th>
                                     <th>Description</th>
                                     <th>Stock</th>
                                     <th>Priority</th>
@@ -56,6 +57,7 @@ require APPROOT .'/views/admin/inc/header.php';
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Price</th>
+                                    <th>Discount Price</th>
                                     <th>Description</th>
                                     <th>Stock</th>
                                     <th>Priority</th>
@@ -72,6 +74,7 @@ require APPROOT .'/views/admin/inc/header.php';
                                         <td><?= $v->product_id ?></td>
                                         <td><?= $v->product_name ?></td>
                                         <td>RM <?= $v->product_price ?></td>
+                                        <td><?= ($v->promo_price != null)? 'RM '.$v->promo_price : 'No Discount'?></td>
                                         <td><?= $v->product_description ?></td>
                                         <td><?= $v->product_stock ?></td>
                                         <td><?= $v->priority ?></td>

@@ -241,12 +241,11 @@ class Admin extends Controller
             $data['id'] = $this->entity_id;
 
             $product_add = $this->productModel->product($data, 'update');
-
             if ($product_add == true) {
-
                 $p_name = $data['p_name'];
-                $_SESSION['success_msg'] = "Product <strong>" . $p_name . "</strong> Update successfully";
+                $_SESSION['success_msg'] = "Product <strong>" . $p_name . "</strong> edit successfully";
                 redirect('admin/product');
+                exit();
             } else {
                 redirect('admin/edit_product/' . $data['id']);
             }

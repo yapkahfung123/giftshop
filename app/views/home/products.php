@@ -88,13 +88,19 @@
                                                href="shop-single-product.html"><?= $v->product_name ?></a>
                                         </h3>
                                         <span class="price">
-                        <del>
-                          <span>RM <?= $v->product_price ?></span>
-                        </del>
-                        <ins>
-                          <span class="ammount">RM <?= $v->product_price ?></span>
-                        </ins>
-                      </span>
+                                            <?php if($v->promo_price != null){ ?>
+                                                <del>
+                                                  <span>RM <?= $v->product_price ?></span>
+                                                </del>
+                                                <ins>
+                                                  <span class="amount">RM <?= $v->promo_price ?></span>
+                                                </ins>
+                                            <?php }else{ ?>
+                                                <ins>
+                                                  <span class="amount">RM <?= $v->product_price ?></span>
+                                                </ins>
+                                            <?php } ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +130,7 @@
                         Showing: <?php echo $data['pagination']['page'] . ' / ' . $data['pagination']['totalPages'] . ' of ' . $data['pagination']['totalProducts'] . ' results' ?></p>
                     <nav class="pagination right clear">
                         <?php
-                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'prev')
+                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'], 'prev')
                         ?>
                         <a href="<?= ($data['pagination']['page'] == 1) ? 'javascript:void(0)' : $url ?>">
                             <i class="fa fa-angle-left"></i>
@@ -134,14 +140,15 @@
 
                         for ($p = 1; $p <= $data['pagination']['totalPages']; $p++) :
                             $url = paginationProductUrl($data['category_id'], $p)
-                        ?>
+                            ?>
 
-                            <a href="<?= $url ?>"><span style="display: contents" class="<?= ($data['pagination']['page'] == $p) ? 'page-numbers current' : '' ?>"><?= $p; ?></span></a>
+                            <a href="<?= $url ?>"><span style="display: contents"
+                                                        class="<?= ($data['pagination']['page'] == $p) ? 'page-numbers current' : '' ?>"><?= $p; ?></span></a>
 
                         <?php endfor; ?>
 
                         <?php
-                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'],'next');
+                        $url = paginationProductUrl($data['category_id'], $data['pagination']['page'], 'next');
                         ?>
 
                         <a href="<?= ($data['pagination']['page'] == $data['pagination']['totalPages']) ? 'javascript:void(0)' : $url ?>">

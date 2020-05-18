@@ -41,6 +41,14 @@ require APPROOT . '/views/admin/inc/header.php';
                             </div>
 
                             <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">Discount Price<sup class="img-size">*
+                                        Leave Blank if no discount</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="number" min="0" class="form-control" name="p_discount">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="about" class="col-sm-3 control-label">Product Description</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" name="p_description" required></textarea>

@@ -15,9 +15,10 @@ require APPROOT . '/views/admin/inc/header.php';
             <div class="container-fluid">
 
                 <?php
-                if(isset($_SESSION['success_msg'])){
+                if (isset($_SESSION['success_msg'])) {
                     flash_template($_SESSION['success_msg'], 'alert alert-success', 'text-align: center');
-                }unset($_SESSION['success_msg']);
+                }
+                unset($_SESSION['success_msg']);
                 ?>
 
                 <!-- Page Heading -->
@@ -49,6 +50,15 @@ require APPROOT . '/views/admin/inc/header.php';
                                 <div class="col-sm-9">
                                     <input type="number" min="0" class="form-control" name="p_price"
                                            value="<?= $data['product']->product_price ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">Discount Price<sup class="img-size">*
+                                        Leave Blank if no discount</sup></label>
+                                <div class="col-sm-9">
+                                    <input type="number" min="0" class="form-control" name="p_discount"
+                                            value="<?= $data['product']->promo_price ?>">
                                 </div>
                             </div>
 
