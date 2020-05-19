@@ -4130,7 +4130,7 @@ table th {
   color: #979797;
   background-color: #f7f7f7;
   display: block;
-  padding: 18px;
+  /*padding: 18px;*/
 
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -4464,7 +4464,7 @@ input[type=number] {
   margin-top: 0;
 }
 .single-product .socials-share .social-icons a {
-  padding: 10px;
+  /*padding: 10px;*/
 }
 
 .single-product .socials-share span,
