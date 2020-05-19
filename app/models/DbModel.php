@@ -32,9 +32,6 @@ class DbModel
         $sql_field = implode(', ', array_keys($array));
         $sql_value = ':' . implode(', :', array_keys($array));
 
-        d($sql_field);
-        d($sql_value);
-
         $this->db->query("INSERT INTO {$this->prefix}{$table} ({$sql_field}) VALUES ({$sql_value})");
 
         foreach ($array as $k => $v) {

@@ -115,6 +115,17 @@ function get_category(){
     return $result;
 }
 
+function get_category_name($id){
+    global $db;
+    $db->query("SELECT cat_name FROM {$db->prefix}category WHERE status = 1 AND cat_id = :id");
+
+    $db->bind('id', $id);
+
+    $result = $db->single();
+
+    return $result->cat_name;
+}
+
 function getProductsRowCount($category = null){
     global $db;
 

@@ -101,10 +101,21 @@
 <!-- end footer -->
 
 <!-- jQuery Scripts -->
+
 <script type="text/javascript" src="<?= URLROOT ?>public/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?= URLROOT ?>public/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.2/jquery.flexslider-min.js"></script>
+<script src="https://unpkg.com/flickity@2.2.1/dist/flickity.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.appear/0.4.1/jquery.appear.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js"></script>
 <script type="text/javascript" src="<?= URLROOT ?>public/js/plugins.js"></script>
+
 <script type="text/javascript" src="<?= URLROOT ?>public/js/scripts.js"></script>
+
+
+
 
 </body>
 </html>

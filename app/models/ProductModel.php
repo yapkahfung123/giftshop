@@ -14,15 +14,16 @@ class ProductModel
     public function product($product, $type)
     {
         if ($type == 'insert') {
-            $this->db->query("INSERT INTO {$this->prefix}product (product_name, product_price, product_description, product_stock, product_category, promo_price, img_path, priority) VALUES (:p_name, :p_price, :p_desc, :p_stock, :p_cate, :promo_price, :img, :priority)");
+            $this->db->query("INSERT INTO {$this->prefix}product (product_name, product_price, product_sku, product_description, product_stock, product_category, promo_price, img_path, priority) VALUES (:p_name, :p_price, :p_sku, :p_desc, :p_stock, :p_cate, :promo_price, :img, :priority)");
         } elseif ($type == 'update') {
-            $this->db->query("UPDATE {$this->prefix}product SET product_name = :p_name, product_price = :p_price, product_description = :p_desc,  product_stock = :p_stock, product_category = :p_cate, promo_price = :promo_price, img_path = :img, priority = :priority WHERE product_id = {$product['id']}");
+            $this->db->query("UPDATE {$this->prefix}product SET product_name = :p_name, product_price = :p_price, product_sku = :p_sku, product_description = :p_desc,  product_stock = :p_stock, product_category = :p_cate, promo_price = :promo_price, img_path = :img, priority = :priority WHERE product_id = {$product['id']}");
         }
 
 
 
         $this->db->bind('p_name', $product['p_name']);
         $this->db->bind('p_price', $product['p_price']);
+        $this->db->bind('p_sku', $product['p_sku']);
         $this->db->bind('p_desc', $product['p_description']);
         $this->db->bind('p_stock', $product['p_stock']);
         $this->db->bind('p_cate', $product['category']);

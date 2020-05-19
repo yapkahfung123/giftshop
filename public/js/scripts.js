@@ -2,7 +2,7 @@
 
   "use strict";
 
-  $(window).load(function() {
+  $(window).on('load', function() {
 
     // Preloader
     $('.loader').fadeOut();
@@ -301,15 +301,15 @@
 
   $gallery.magnificPopup({
     delegate: '.lightbox-img, .lightbox-video',
-    callbacks: {
-      elementParse: function(item) {
-      if(item.el.context.className == 'lightbox-video') {
-          item.type = 'iframe';
-        } else {
-          item.type = 'image';
-        }
-      }
-    },
+    // callbacks: {
+    //   elementParse: function(item) {
+    //   if(item.el.context.className == 'lightbox-video') {
+    //       item.type = 'iframe';
+    //     } else {
+    //       item.type = 'image';
+    //     }
+    //   }
+    // },
     type: 'image',
     closeBtnInside:false,
     gallery:{
@@ -321,15 +321,15 @@
   /* Lightbox popup
   -------------------------------------------------------*/
   $('.lightbox-img, .lightbox-video').magnificPopup({
-    callbacks: {
-      elementParse: function(item) {
-      if(item.el.context.className == 'lightbox-video') {
-          item.type = 'iframe';
-        } else {
-          item.type = 'image';
-        }
-      }
-    },
+    // callbacks: {
+    //   elementParse: function(item) {
+    //   if(item.el.context.className == 'lightbox-video') {
+    //       item.type = 'iframe';
+    //     } else {
+    //       item.type = 'image';
+    //     }
+    //   }
+    // },
     type: 'image',
     closeBtnInside:false,
     gallery: {

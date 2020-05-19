@@ -7,6 +7,7 @@ class Home extends Controller
         $this->dbFunc = $this->model('DbModel');
         $this->homeModel = $this->model('HomeModel');
         $this->productModel = $this->model('ProductModel');
+        $this->entity_id = $this->getUrl();
     }
 
     public function index()
@@ -169,8 +170,23 @@ class Home extends Controller
 
     public function product()
     {
+        $product_id = $_GET['product_id'];
+
+        $variation_decode = '';
+
+        $product = $this->productModel->getProductByID($product_id);
+
+        $variation = $this->dbFunc->select('variation_name', 'product_variation', 'product_id', $product_id);
+
+        if($variation != null || !empty($variation)){
+            $variation_decode = json_decode($variation[0]->variation_name);
+        }
+
+
         $data = [
-            'title' => 'Product | YMC'
+            'title' => 'Product | YMC',
+            'product' => $product,
+            'variation' => $variation_decode
         ];
 
         $this->view('home/product', $data);

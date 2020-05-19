@@ -63,6 +63,13 @@ require APPROOT . '/views/admin/inc/header.php';
                             </div>
 
                             <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">SKU</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="p_sku">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="about" class="col-sm-3 control-label">Product Description</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" name="p_description"

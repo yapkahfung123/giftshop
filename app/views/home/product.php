@@ -1,6 +1,6 @@
-<?php include_once APPROOT . '/views/home/inc/header.php'?>
-<?php include_once APPROOT . '/views/home/inc/topbar.php'?>
-<?php include_once APPROOT . '/views/home/inc/navbar.php'?>
+<?php include_once APPROOT . '/views/home/inc/header.php' ?>
+<?php include_once APPROOT . '/views/home/inc/topbar.php' ?>
+<?php include_once APPROOT . '/views/home/inc/navbar.php' ?>
 <!-- Breadcrumbs -->
 <div class="container">
     <ol class="breadcrumb">
@@ -11,7 +11,7 @@
             <a href="<?= URLROOT . 'home/categories' ?>">Shop</a>
         </li>
         <li class="active">
-            Product
+            <?= ucfirst($data['product']->product_name) ?>
         </li>
     </ol> <!-- end breadcrumbs -->
 </div>
@@ -24,99 +24,88 @@
             <div class="col-sm-6 col-xs-12 mb-60">
 
                 <div class="flickity flickity-slider-wrap mfp-hover" id="gallery-main">
+                    <?php
+                    $img = json_decode($data['product']->img_path);
+                    foreach ($img as $v):
+                        ?>
+                        <div class="gallery-cell">
 
-                    <div class="gallery-cell">
-                        <a href="img/shop/single_img_1.jpg" class="lightbox-img">
-                            <img src="img/shop/single_img_1.jpg" alt="" />
-                            <i class="icon arrow_expand"></i>
-                        </a>
-                    </div>
-                    <div class="gallery-cell">
-                        <a href="img/shop/single_img_2.jpg" class="lightbox-img">
-                            <img src="img/shop/single_img_2.jpg" alt="" />
-                            <i class="icon arrow_expand"></i>
-                        </a>
-                    </div>
-                    <div class="gallery-cell">
-                        <a href="img/shop/single_img_3.jpg" class="lightbox-img">
-                            <img src="img/shop/single_img_3.jpg" alt="" />
-                            <i class="icon arrow_expand"></i>
-                        </a>
-                    </div>
-                    <div class="gallery-cell">
-                        <a href="img/shop/single_img_4.jpg" class="lightbox-img">
-                            <img src="img/shop/single_img_4.jpg" alt="" />
-                            <i class="icon arrow_expand"></i>
-                        </a>
-                    </div>
-                    <div class="gallery-cell">
-                        <a href="img/shop/single_img_5.jpg" class="lightbox-img">
-                            <img src="img/shop/single_img_5.jpg" alt="" />
-                            <i class="icon arrow_expand"></i>
-                        </a>
-                    </div>
+                            <a href="<?= URLROOT ?>public/img/uploads/products/<?= $v ?>" class="lightbox-img">
+                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $v ?>" alt=""/>
+                                <i class="icon arrow_expand"></i>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+
                 </div> <!-- end gallery main -->
 
                 <div class="gallery-thumbs">
 
-                    <div class="gallery-cell">
-                        <img src="img/shop/single_img_1.jpg" alt="" />
-                    </div>
-                    <div class="gallery-cell">
-                        <img src="img/shop/single_img_2.jpg" alt="" />
-                    </div>
-                    <div class="gallery-cell">
-                        <img src="img/shop/single_img_3.jpg" alt="" />
-                    </div>
-                    <div class="gallery-cell">
-                        <img src="img/shop/single_img_4.jpg" alt="" />
-                    </div>
-                    <div class="gallery-cell">
-                        <img src="img/shop/single_img_5.jpg" alt="" />
-                    </div>
+                    <?php
+                    foreach ($img as $v):
+                        ?>
+                        <div class="gallery-cell">
+                            <img src="<?= URLROOT ?>public/img/uploads/products/<?= $v ?>" alt=""/>
+                        </div>
+
+                    <?php endforeach; ?>
 
                 </div> <!-- end gallery thumbs -->
 
             </div> <!-- end col img slider -->
 
             <div class="col-sm-6 col-xs-12 product-description-wrap">
-                <h1 class="product-title">Summer Dress</h1>
-                <span class="rating">
-              <a href="#">3 Reviews</a>
-            </span>
+                <h1 class="product-title"><?= $data['product']->product_name ?></h1>
+<!--                <span class="rating">-->
+<!--              <a href="#">3 Reviews</a>-->
+<!--               </span>-->
                 <span class="price">
-              <del>
-                <span>$1550.00</span>
-              </del>
-              <ins>
-                <span class="ammount">$1250.00</span>
-              </ins>
-            </span>
-                <p class="product-description">A-ha Shop is a very slick and clean e-commerce template with endless possibilities. Creating an awesome clothes store with this Theme is easy than you can imagine</p>
+                    <?php if($data['product']->promo_price != null){ ?>
+                        <del>
+                          <span>RM <?= $data['product']->product_price ?></span>
+                        </del>
+                        <ins>
+                          <span class="amount">RM <?= $data['product']->promo_price ?></span>
+                        </ins>
+                    <?php }else{ ?>
+                        <ins>
+                          <span class="amount">RM <?= $data['product']->product_price ?></span>
+                        </ins>
+                    <?php } ?>
+                </span>
+                <p class="product-description"><?= $data['product']->product_description ?></p>
 
                 <div class="select-options">
                     <div class="row row-20">
-                        <div class="col-sm-6">
-                            <select class="color-select">
-                                <option value>Select color</option>
-                                <option value="white">white</option>
-                                <option value="grey">grey</option>
-                                <option value="black">black</option>
-                                <option value="green">green</option>
-                                <option value="blue">blue</option>
-                            </select>
-                        </div>
+                        <?php
+                        if(!empty($data['variation'])) :
+                        //Turn object to array
+                        foreach ($data['variation'] as $k => $v) {
+                            $variation[] = get_object_vars($v);
+                        }
+                        $array = array();
+                        //Loop variation
+                        foreach ($variation as $k => $v):
+                            //Initiate Keys
+                            $attr_keys = array_keys($v);
+                            $attr_keys = $attr_keys[0];
 
-                        <div class="col-sm-6">
-                            <select class="size-options">
-                                <option value>Select size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                        </div>
+                            //Initiate Values
+                            $attr_values = array_values($v);
+                            $attr_values = explode(', ', $attr_values[0]);
+                            ?>
+                            <div class="col-sm-6">
+                                <select class="color-select">
+                                    <option value>Select <?= $attr_keys ?></option>
+                                    <?php foreach ($attr_values as $key => $value) : ?>
+                                        <option value="<?= strtolower($value) ?>"><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <?php
+                        endforeach;
+                        endif;
+                        ?>
                     </div>
                 </div>
 
@@ -132,15 +121,18 @@
                     </li>
                     <li>
                         <div class="quantity buttons_added">
-                            <input type="button" value="-" class="minus" /><input type="number" step="1" min="0" value="1" title="Qty" class="input-text qty text" /><input type="button" value="+" class="plus" />
+                            <input type="button" value="-" class="minus"/><input type="number" step="1" min="0"
+                                                                                 value="1" title="Qty"
+                                                                                 class="input-text qty text"/><input
+                                    type="button" value="+" class="plus"/>
                         </div>
                     </li>
                 </ul>
 
                 <div class="product_meta">
-                    <span class="sku">SKU: <a href="#">111763</a></span>
-                    <span class="posted_in">Category: <a href="#">Accessories</a></span>
-                    <span class="tagged_as">Tags: <a href="#">Elegant</a>, <a href="#">Bag</a></span>
+                    <span class="sku">SKU: <a href="#"><?= $data['product']->product_sku ?></a></span>
+                    <span class="posted_in">Category: <?= get_category_name($data['product']->product_category) ?></span>
+<!--                    <span class="tagged_as">Tags: <a href="#">Elegant</a>, <a href="#">Bag</a></span>-->
                 </div>
 
                 <div class="socials-share clearfix">
@@ -176,7 +168,14 @@
 
                         <div class="tab-pane fade in active" id="tab-description">
                             <p>
-                                We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind contains such power and complexity that it literally staggers the imagination.And finally the subconscious is the mechanism through which thought impulses which are repeated regularly with feeling and emotion are quickened, charged. Our subconscious mind contains such power and complexity that it literally staggers the imagination.And finally the subconscious is the mechanism through which thought impulses.
+                                We possess within us two minds. So far I have written only of the conscious mind. I
+                                would now like to introduce you to your second mind, the hidden and mysterious
+                                subconscious. Our subconscious mind contains such power and complexity that it literally
+                                staggers the imagination.And finally the subconscious is the mechanism through which
+                                thought impulses which are repeated regularly with feeling and emotion are quickened,
+                                charged. Our subconscious mind contains such power and complexity that it literally
+                                staggers the imagination.And finally the subconscious is the mechanism through which
+                                thought impulses.
                             </p>
                         </div>
 
@@ -207,11 +206,14 @@
                                     <li>
                                         <div class="review-body">
                                             <div class="review-content">
-                                                <p class="review-author"><strong>Alexander Samokhin</strong> - May 6, 2014 at 12:48 pm</p>
+                                                <p class="review-author"><strong>Alexander Samokhin</strong> - May 6,
+                                                    2014 at 12:48 pm</p>
                                                 <div class="rating">
                                                     <a href="#"></a>
                                                 </div>
-                                                <p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
+                                                <p>This template is so awesome. I didn’t expect so many features inside.
+                                                    E-commerce pages are very useful, you can launch your online store
+                                                    in few seconds. I will rate 5 stars.</p>
                                             </div>
                                         </div>
                                     </li>
@@ -219,11 +221,14 @@
                                     <li>
                                         <div class="review-body">
                                             <div class="review-content">
-                                                <p class="review-author"><strong>Christopher Robins</strong> - May 6, 2014 at 12:48 pm</p>
+                                                <p class="review-author"><strong>Christopher Robins</strong> - May 6,
+                                                    2014 at 12:48 pm</p>
                                                 <div class="rating">
                                                     <a href="#"></a>
                                                 </div>
-                                                <p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
+                                                <p>This template is so awesome. I didn’t expect so many features inside.
+                                                    E-commerce pages are very useful, you can launch your online store
+                                                    in few seconds. I will rate 5 stars.</p>
                                             </div>
                                         </div>
                                     </li>
@@ -244,4 +249,4 @@
 <!-- end single product -->
 
 
-<?php include_once APPROOT . '/views/home/inc/footer.php'?>
+<?php include_once APPROOT . '/views/home/inc/footer.php' ?>
