@@ -5,6 +5,7 @@ class Admin extends Controller
 {
     public function __construct()
     {
+
         $this->dbFunc = $this->model('DbModel');
         $this->adminModel = $this->model('AdminModel');
         $this->productModel = $this->model('ProductModel');
@@ -395,6 +396,8 @@ class Admin extends Controller
     }
 
     public function user_list(){
+        check_adminSession();
+
         $user_list = $this->adminModel->user_lists();
 
         $data = [
@@ -406,10 +409,58 @@ class Admin extends Controller
     }
 
     public function options(){
+        check_adminSession();
+
         $data = [
             'title' => 'Options | YMC',
         ];
 
         $this->view('admin/options', $data);
+    }
+
+    public function product_tag(){
+        check_adminSession();
+        $tag = $this->productModel->getProductTag();
+        $product = $this->productModel->getProduct();
+
+        $data = [
+            'title' => 'Product Tag | YMC',
+            'tag' => $tag,
+            'product' => $product
+        ];
+
+        $this->view('admin/product/product-tag', $data);
+    }
+
+    public function update_tag(){
+        check_adminSession();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $post_val = array();
+
+            foreach ($_POST as $key => $value) {
+                $post_val[$key] = $value;
+            }
+
+            if(isset($post_val['tag'])){
+                $post_val['tag'] = json_encode($post_val['tag']);
+            }else{
+                $post_val['tag'] = null;
+            }
+
+            $insert = $this->dbFunc->update(array(
+                "product_id" => $post_val['tag']
+            ), 'product_tag', 'id='.$post_val['tag_id']);
+
+            if($insert == 'true'){
+                $_SESSION['success_msg'] = 'Tag ID <b>' . $post_val['tag_id'] . '</b> has successfully update';
+
+                redirect('admin/product_tag');
+            }else{
+                redirect('admin/product_tag');
+            }
+        }
     }
 }

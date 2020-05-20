@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="<?php echo URLROOT;?>public/css/custom.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+
     <script src="<?php echo URLROOT;?>public/js/jquery.min.js"></script>
     <script src="<?php echo URLROOT;?>public/js/jquery-3.0.0.min.js"></script>
 

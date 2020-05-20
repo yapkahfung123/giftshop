@@ -18,10 +18,14 @@ class DbModel
         return $this->db->single();
     }
 
-    public function select($column, $table, $where, $additional)
+    public function select($column, $table, $where = null, $additional = null)
     {
-        $this->db->query("SELECT {$column} FROM {$this->prefix}{$table} WHERE {$where} = {$additional}");
 
+        if($where == null && $additional == null){
+            $this->db->query("SELECT {$column} FROM {$this->prefix}{$table}");
+        }else{
+            $this->db->query("SELECT {$column} FROM {$this->prefix}{$table} WHERE {$where} = {$additional}");
+        }
         $result = $this->db->resultSet();
 
         return $result;

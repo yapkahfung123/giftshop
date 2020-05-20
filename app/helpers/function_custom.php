@@ -170,3 +170,14 @@ function paginationProductUrl($category_id = null, $page, $prevOrNext = null){
 
     return $url;
 }
+
+function getProductById($id){
+    global $db;
+    $db->query("SELECT * FROM {$db->prefix}product WHERE product_id = :id");
+
+    $db->bind('id', $id);
+
+    $result = $db->single();
+
+    return $result;
+}

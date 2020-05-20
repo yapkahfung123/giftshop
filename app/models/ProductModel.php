@@ -171,4 +171,10 @@ class ProductModel
         return $this->db->execute();
     }
 
+    public function getProductTag(){
+        $this->db->query("SELECT * FROM {$this->prefix}product_tag");
+
+        return $this->db->resultSet();
+    }
+
 }

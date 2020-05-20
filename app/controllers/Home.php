@@ -12,12 +12,13 @@ class Home extends Controller
 
     public function index()
     {
-        $categories = $this->productModel->getCategory();
+        $prod_tag = $this->dbFunc->select("product_tagname, product_id", "product_tag");
 
         $data = [
             'title' => 'GiftShop | YMC',
-            'categories' => $categories
+            'prod_tag' => $prod_tag
         ];
+        d($data);
 
         $this->view('home/index', $data);
     }

@@ -188,3 +188,19 @@ function deleteCatImg(el, id, category_id) {
         }
     })
 }
+
+$(document).ready(function(){
+    $(document).ready(function() {
+        var limit = 3;
+        $('.tag-multiselect').multiselect({
+            includeSelectAllOption: true,
+            buttonWidth: 250,
+            enableFiltering: true,
+        });
+    });
+
+})
+
+
+
+

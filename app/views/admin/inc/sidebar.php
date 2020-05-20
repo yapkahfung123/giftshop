@@ -49,8 +49,9 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Product Management</h6>
-                <a class="collapse-item" href="<?= URLROOT . 'admin/product' ?>">Product</a>
-                <a class="collapse-item" href="<?= URLROOT . 'admin/category' ?>">Category</a>
+                <a class="collapse-item" href="/admin/product">Product</a>
+                <a class="collapse-item" href="/admin/category">Category</a>
+                <a class="collapse-item" href="/admin/product_tag">Product Tag</a>
             </div>
         </div>
     </li>

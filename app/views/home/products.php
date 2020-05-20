@@ -59,13 +59,13 @@
                                 <div class="product-item">
                                     <div class="product-img">
                                         <?php if (empty($img)) { ?>
-                                            <a href="<?= URLROOT ?>home/product?product_id=<?= $v->product_id ?>">
+                                            <a href="/home/product?product_id=<?= $v->product_id ?>">
                                                 <img src="<?= URLROOT ?>public/img/no-img.jpg" alt="">
                                             </a>
                                             <?php
                                         } else {
                                             ?>
-                                            <a href="<?= URLROOT ?>home/product?product_id=<?= $v->product_id?>">
+                                            <a href="/home/product?product_id=<?= $v->product_id?>">
                                                 <img src="<?= URLROOT ?>public/img/uploads/products/<?= $img[0] ?>"
                                                      alt="">
                                             </a>

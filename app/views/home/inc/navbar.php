@@ -144,6 +144,7 @@
                                 </ul>
                             </li>
 
+                            <?php /*
                             <li class="dropdown">
                                 <a href="<?= URLROOT . 'home/categories' ?>" class="dropdown-toggle" data-toggle="dropdown">Categories</a>
                                 <ul class="dropdown-menu megamenu">
@@ -157,21 +158,22 @@
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div>
-
-<!--                                                <div class="col-md-3 megamenu-item">-->
-<!--                                                    <h6>For Woman</h6>-->
-<!--                                                    <ul class="menu-list">-->
-<!--                                                        <li><a href="#">Dresses</a></li>-->
-<!--                                                        <li><a href="#">Coats</a></li>-->
-<!--                                                        <li><a href="#">Accessories</a></li>-->
-<!--                                                        <li><a href="#">Sandals</a></li>-->
-<!--                                                    </ul>-->
-<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
                             </li> <!-- end categories -->
+                             */?>
+
+                            <li class="dropdown">
+                                <a href="#">Categories</a>
+                                <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
+                                <ul class="dropdown-menu">
+                                    <?php foreach (get_category() as $k => $v) : ?>
+                                        <li><a href="/home/all_products?category_id=<?= $v->cat_id ?>"><?= $v->cat_name ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
 
                             <li class="dropdown">
                                 <a href="#">Shop</a>

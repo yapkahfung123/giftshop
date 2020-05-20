@@ -45,6 +45,8 @@
 <script src="<?php echo URLROOT;?>public/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="<?php echo URLROOT;?>public/js/demo/datatables-demo.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo URLROOT;?>public/js/bootstrap.bundle.min.js"></script>
 
