@@ -18,7 +18,6 @@ class Home extends Controller
             'title' => 'GiftShop | YMC',
             'prod_tag' => $prod_tag
         ];
-        d($data);
 
         $this->view('home/index', $data);
     }
