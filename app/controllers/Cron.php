@@ -14,11 +14,11 @@ class Cron extends Controller
 
     public function index()
     {
-        $mail = new PHPMailer(true);
+        $mail = new PHPMailer(false);
 
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      // Enable verbose debug output
             $mail->isSMTP();                                            // Send using SMTP
             $mail->Host       = 'smtp.office365.com';                    // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
