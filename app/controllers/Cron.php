@@ -34,7 +34,7 @@ class Cron extends Controller
             // Content
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->Body    = 'This is the HTML message body <b>in production cron job!</b>';
             $mail->AltBody = 'This is the body in from production cron job';
 
             $mail->send();
