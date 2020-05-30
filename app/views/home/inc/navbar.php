@@ -166,7 +166,7 @@
                              */?>
 
                             <li class="dropdown">
-                                <a href="/home/collection">Categories</a>
+                                <a href="/home/collections">Categories</a>
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
                                     <?php foreach (get_category() as $k => $v) : ?>
