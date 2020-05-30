@@ -78,8 +78,8 @@ class App extends Controller
         $this->productModel->updateImg($result, $_POST['p_id']);
 
         //Delete pic from server
-        if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['img'])){
-            unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['img']);
+        if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img'])){
+            unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img']);
             $data['response'] = 'yes';
         }else{
             $data['response'] = 'file doesnt exist';

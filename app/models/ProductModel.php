@@ -9,6 +9,7 @@ class ProductModel
     {
         $this->db = new Database();
         $this->prefix = 'ymc_';
+
     }
 
     public function product($product, $type)
@@ -34,7 +35,7 @@ class ProductModel
         $result = $this->db->execute();
 
         if ($result) {
-            return $result;
+            return true;
         } else {
             return false;
         }
@@ -173,6 +174,18 @@ class ProductModel
 
     public function getProductTag(){
         $this->db->query("SELECT * FROM {$this->prefix}product_tag");
+
+        return $this->db->resultSet();
+    }
+
+    public function getProductImg(){
+        $this->db->query("SELECT product_id, img_path FROM {$this->prefix}product");
+
+        return $this->db->resultSet();
+    }
+
+    public function getCategoryImg(){
+        $this->db->query("SELECT img_path FROM {$this->prefix}category");
 
         return $this->db->resultSet();
     }

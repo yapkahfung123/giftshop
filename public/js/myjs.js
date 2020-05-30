@@ -154,14 +154,14 @@ $(document).ready(function () {
     })
 })
 
-function deleteImg(el, id) {
+function deleteImg(el, id, product_id) {
     var p_id = $('#img_delete_p_id').val();
     var element = el;
 
     $.ajax({
         url: '/app/delete_img',
         method: 'post',
-        data: {"img": id, "p_id": p_id},
+        data: {"img": id, "p_id": p_id, "product_id": product_id},
         success: function (response) {
             data = JSON.parse(response);
             if (data.response == 'yes') {

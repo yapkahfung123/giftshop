@@ -166,7 +166,7 @@
                              */?>
 
                             <li class="dropdown">
-                                <a href="#">Categories</a>
+                                <a href="/home/collection">Categories</a>
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
                                     <?php foreach (get_category() as $k => $v) : ?>
@@ -179,11 +179,11 @@
                                 <a href="#">Shop</a>
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<?= URLROOT . 'home/all_products' ?>">All Products</a></li>
-                                    <li><a href="<?= URLROOT . 'home/collections' ?>">Collections</a></li>
-                                    <li><a href="<?= URLROOT . 'home/product' ?>">Single Product</a></li>
-                                    <li><a href="<?= URLROOT . 'home/cart' ?>">Cart</a></li>
-                                    <li><a href="<?= URLROOT . 'home/checkout' ?>">Checkout</a></li>
+                                    <li><a href="/home/all_products">All Products</a></li>
+<!--                                    <li><a href="/home/collections">Collections</a></li>-->
+<!--                                    <li><a href="/home/product">Single Product</a></li>-->
+                                    <li><a href="/home/cart">Cart</a></li>
+                                    <li><a href="/home/checkout">Checkout</a></li>
                                 </ul>
                             </li>
 

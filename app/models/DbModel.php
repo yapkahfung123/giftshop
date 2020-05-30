@@ -24,10 +24,10 @@ class DbModel
         if($where == null && $additional == null){
             $this->db->query("SELECT {$column} FROM {$this->prefix}{$table}");
         }else{
-            $this->db->query("SELECT {$column} FROM {$this->prefix}{$table} WHERE {$where} = {$additional}");
+            $this->db->query("SELECT {$column} FROM {$this->prefix}{$table} WHERE {$where} = '{$additional}'");
         }
-        $result = $this->db->resultSet();
 
+        $result = $this->db->resultSet();
         return $result;
     }
 

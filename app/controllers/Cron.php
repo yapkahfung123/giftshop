@@ -1,46 +1,52 @@
 <?php
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 class Cron extends Controller
 {
     public function __construct()
     {
-
+        $this->dbFunc = $this->model('DbModel');
+        $this->adminModel = $this->model('AdminModel');
+        $this->productModel = $this->model('ProductModel');
     }
 
-    public function index()
-    {
-        $mail = new PHPMailer(false);
-
-        try {
-            //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      // Enable verbose debug output
-            $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host       = 'smtp.office365.com';                    // Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = 'ymc1112@hotmail.com';                     // SMTP username
-            $mail->Password   = 'ymc123456';                               // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-
-            //Recipients
-            $mail->setFrom('ymc1112@hotmail.com', 'CronJob');
-            $mail->addAddress('kahfungwork@gmail.com', 'Kah Fung');     // Add a recipient
-
-            // Content
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in production cron job!</b>';
-            $mail->AltBody = 'This is the body in from production cron job';
-
-            $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    public static function removeImg($img = array(), $dir){
+        if(is_array($img)){
+            foreach ($img as $k => $v){
+                unlink($dir . $v);
+            }
         }
+    }
+
+    public function delete_img()
+    {
+
+        // Delete Product Img
+        $get_product_Img = $this->productModel->getProductImg();
+
+        foreach ($get_product_Img as $k => $v) {
+            $db_imgPath = json_decode($v->img_path);
+
+            $dir = $_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $v->product_id . '/';
+
+            if(file_exists($dir)){
+                $dir_imgFile = array_diff(scandir($dir), array('..', '.'));
+                $unwanted_file = array_diff($dir_imgFile, $db_imgPath);
+
+                self::removeImg($unwanted_file, $dir);
+            }
+        }
+
+        // Delete Category Image
+        $dir = $_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/';
+        $dir_imgFile = array_diff(scandir($dir), array('..', '.'));
+
+        foreach ($dir_imgFile as $k => $v) {
+            $get_Category_Img = $this->dbFunc->select('img_path', 'category', 'img_path', $v);
+            if(empty($get_Category_Img)){
+                self::removeImg(array($v), $dir);
+            }
+        }
+
+        echo "Done";
     }
 }

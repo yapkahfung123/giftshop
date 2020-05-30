@@ -165,19 +165,22 @@ class Admin extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            $latest_id = getLatestPrimaryKey('product');
+
             $data = array();
 
             foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }
             if(isset($_FILES)){
-                $save_img = save_product_img($_FILES);
+                $save_img = save_product_img($_FILES, $latest_id, 'add');
             }
 
             $data['img_upload'] = json_encode($save_img['img_upload']);
 
             $product_add = $this->productModel->product($data, 'insert');
-            if ($product_add == true) {
+
+            if ($product_add != false) {
 
                 $p_name = $data['p_name'];
                 $_SESSION['success_msg'] = "Product <strong>" . $p_name . "</strong> added successfully";
@@ -198,7 +201,6 @@ class Admin extends Controller
     public function edit_product()
     {
         check_adminSession();
-
         $entity_id = $this->entity_id;
 
         $product = $this->productModel->getProductByID($entity_id);
@@ -232,7 +234,7 @@ class Admin extends Controller
 
             //If user didnt upload anything, then take data from db
             if($_FILES['p_img']['name'][0] != ''){
-                $save_img = save_product_img($_FILES);
+                $save_img = save_product_img($_FILES, $entity_id, 'edit');
             }else{
                 $save_img = array('img_upload' => json_decode($product->img_path));
             }

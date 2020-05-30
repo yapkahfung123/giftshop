@@ -1,7 +1,4 @@
 <?php
-require_once APPROOT . '/libraries/Database.php';
-$db = new Database();
-
 
 function flash_template($session, $class, $style = null)
 {
@@ -17,16 +14,27 @@ function dd(...$vars)
     exit;
 }
 
-function save_product_img($img)
+function save_product_img($img, $latest_id, $type)
 {
     require_once APPROOT . '/helpers/pic_resize.php';
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/';
-    $error = array();
 
+    $product_id = ($type == 'add')? ($latest_id + 1) : $latest_id;
+
+    $file_path = $_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $product_id . '/';
+    $file_path_exist = file_exists($file_path);
+
+    // If path not found then create new one for the new product id
+    if(!$file_path_exist){
+        mkdir($file_path);
+    }
+
+    $target_dir = $file_path;
+
+    $error = array();
     $img_upload = array();
 
     foreach ($img['p_img']['tmp_name'] as $key => $value) {
-        $temp_filename = 'IMG-' . mt_rand(0, (int)9999999999);
+        $temp_filename = 'IMG-' . substr(time(), '5') . '-' . mt_rand(0, (int)99999);
         $temp_filename .= '.' . pathinfo($img['p_img']['name'][$key], PATHINFO_EXTENSION);
 
         $target_file = $target_dir . $temp_filename;
@@ -106,78 +114,7 @@ function save_category_image($img)
 
 }
 
-function get_category(){
-    global $db;
-    $db->query("SELECT * FROM {$db->prefix}category WHERE status = 1 ORDER BY priority DESC");
-
-    $result = $db->resultSet();
-
-    return $result;
+function redirect($page){
+    header('location: ' . URLROOT . $page);
 }
 
-function get_category_name($id){
-    global $db;
-    $db->query("SELECT cat_name FROM {$db->prefix}category WHERE status = 1 AND cat_id = :id");
-
-    $db->bind('id', $id);
-
-    $result = $db->single();
-
-    return $result->cat_name;
-}
-
-function getProductsRowCount($category = null){
-    global $db;
-
-    if(isset($category) && !empty($category)){
-        $category = ' AND product_category = ' . $category;
-    }
-
-    $db->query("SELECT * FROM {$db->prefix}product WHERE status = 1{$category}");
-
-    $db->resultSet();
-    return $db->rowCount();
-
-}
-
-function paginationProductUrl($category_id = null, $page, $prevOrNext = null){
-
-    switch ($prevOrNext) {
-        Case 'prev':
-            if ($category_id != null) {
-                $url = '?category_id=' . $category_id . '&page=' . ($page - 1);
-            } else {
-                $url = '?page=' . ($page - 1);
-            }
-            break;
-
-        Case 'next':
-            if ($category_id != null) {
-                $url = '?category_id=' . $category_id . '&page=' . ($page + 1);
-            } else {
-                $url = '?page=' . ($page + 1);
-            }
-            break;
-
-        default:
-            if ($category_id != null) {
-                $url = '?category_id=' . $_GET['category_id'] . '&page=' . $page;
-            } else {
-                $url = '?page=' . $page;
-            }
-            break;
-    }
-
-    return $url;
-}
-
-function getProductById($id){
-    global $db;
-    $db->query("SELECT * FROM {$db->prefix}product WHERE product_id = :id");
-
-    $db->bind('id', $id);
-
-    $result = $db->single();
-
-    return $result;
-}

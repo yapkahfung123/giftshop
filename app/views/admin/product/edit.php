@@ -131,8 +131,8 @@ require APPROOT . '/views/admin/inc/header.php';
                                         ?>
                                         <span class="prod_img">
                                                 <button class="cancelImg" type="button"
-                                                        onclick="deleteImg(this, '<?= $v ?>')">x</button>
-                                                <img src="<?= URLROOT . 'public/img/uploads/products/' . $v ?>"
+                                                        onclick="deleteImg(this, '<?= $v ?>', <?= $data['product']->product_id ?>)">x</button>
+                                                <img src="<?= URLROOT . 'public/img/uploads/products/' . $data['product']->product_id . '/' . $v ?>"
                                                      style="width: 10%; margin: 10px;">
                                             </span>
                                     <?php
