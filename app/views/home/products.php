@@ -66,7 +66,7 @@
                                         } else {
                                             ?>
                                             <a href="/home/product?product_id=<?= $v->product_id?>">
-                                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $img[0] ?>"
+                                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $v->product_id . '/' .$img[0] ?>"
                                                      alt="">
                                             </a>
                                         <?php } ?>

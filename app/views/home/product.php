@@ -30,8 +30,8 @@
                         ?>
                         <div class="gallery-cell">
 
-                            <a href="<?= URLROOT ?>public/img/uploads/products/<?= $v ?>" class="lightbox-img">
-                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $v ?>" alt=""/>
+                            <a href="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' .$v ?>" class="lightbox-img">
+                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' .$v ?>" alt=""/>
                                 <i class="icon arrow_expand"></i>
                             </a>
                         </div>

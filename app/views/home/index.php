@@ -87,7 +87,7 @@
                                 <?php if(empty($img)):?>
                                 <img src="<?= URLROOT ?>public/img/no-img.jpg" alt="">
                                 <?php else: ?>
-                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $img[0] ?>" alt="">
+                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $product->product_id . '/' .$img[0] ?>" alt="">
                                 <?php endif; ?>
                             </a>
                             <div class="product-label">
