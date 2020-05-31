@@ -60,9 +60,15 @@ class Home extends Controller
                         }
                     }
 
-                    $_SESSION['login_successfully'] = 'You been login successfully.';
                     setUserSession($user_data->user_id);
-                    redirect('home/account');
+
+                    if(isset($_SESSION['product_page'])){
+                        redirect('home/product?product_id=' . $_SESSION['product_page']);
+                    }else{
+                        $_SESSION['login_successfully'] = 'You been login successfully.';
+                        redirect('home/account');
+                    }
+
                 } else {
                     $data['error_msg'] = "Login Failed! Invalid Combination";
                     $this->view('home/login', $data);
@@ -170,6 +176,11 @@ class Home extends Controller
 
     public function product()
     {
+
+        if(isset($_SESSION['product_page'])){
+            unset($_SESSION['product_page']);
+        }
+
         $product_id = $_GET['product_id'];
 
         $variation_decode = '';

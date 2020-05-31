@@ -24,6 +24,13 @@
                               </div>';
                         }
 
+                        if (!empty($_SESSION['error_msg'])) {
+                            echo '<div class="alert alert-danger fade in alert-dismissible" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                              <strong>' . $_SESSION['error_msg'] . '</strong>
+                              </div>';
+                        }unset($_SESSION['error_msg'])
+
                         ?>
                         <h4 class="uppercase">login</h4>
                         <p class="form-row form-row-wide">

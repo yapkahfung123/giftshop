@@ -30,8 +30,10 @@
                         ?>
                         <div class="gallery-cell">
 
-                            <a href="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' .$v ?>" class="lightbox-img">
-                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' .$v ?>" alt=""/>
+                            <a href="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' . $v ?>"
+                               class="lightbox-img">
+                                <img src="<?= URLROOT ?>public/img/uploads/products/<?= $data['product']->product_id . '/' . $v ?>"
+                                     alt=""/>
                                 <i class="icon arrow_expand"></i>
                             </a>
                         </div>
@@ -56,18 +58,18 @@
 
             <div class="col-sm-6 col-xs-12 product-description-wrap">
                 <h1 class="product-title"><?= $data['product']->product_name ?></h1>
-<!--                <span class="rating">-->
-<!--              <a href="#">3 Reviews</a>-->
-<!--               </span>-->
+                <!--                <span class="rating">-->
+                <!--              <a href="#">3 Reviews</a>-->
+                <!--               </span>-->
                 <span class="price">
-                    <?php if($data['product']->promo_price != null){ ?>
+                    <?php if ($data['product']->promo_price != null) { ?>
                         <del>
                           <span>RM <?= $data['product']->product_price ?></span>
                         </del>
                         <ins>
                           <span class="amount">RM <?= $data['product']->promo_price ?></span>
                         </ins>
-                    <?php }else{ ?>
+                    <?php } else { ?>
                         <ins>
                           <span class="amount">RM <?= $data['product']->product_price ?></span>
                         </ins>
@@ -76,34 +78,34 @@
                 <p class="product-description"><?= $data['product']->product_description ?></p>
 
                 <div class="select-options">
-                    <div class="row row-20">
+                    <div class="row row-20 attr-select">
                         <?php
-                        if(!empty($data['variation'])) :
-                        //Turn object to array
-                        foreach ($data['variation'] as $k => $v) {
-                            $variation[] = get_object_vars($v);
-                        }
-                        $array = array();
-                        //Loop variation
-                        foreach ($variation as $k => $v):
-                            //Initiate Keys
-                            $attr_keys = array_keys($v);
-                            $attr_keys = $attr_keys[0];
+                        if (!empty($data['variation'])) :
+                            //Turn object to array
+                            foreach ($data['variation'] as $k => $v) {
+                                $variation[] = get_object_vars($v);
+                            }
+                            $array = array();
+                            //Loop variation
+                            foreach ($variation as $k => $v):
+                                //Initiate Keys
+                                $attr_keys = array_keys($v);
+                                $attr_keys = $attr_keys[0];
 
-                            //Initiate Values
-                            $attr_values = array_values($v);
-                            $attr_values = explode(', ', $attr_values[0]);
-                            ?>
-                            <div class="col-sm-6">
-                                <select class="color-select">
-                                    <option value>Select <?= $attr_keys ?></option>
-                                    <?php foreach ($attr_values as $key => $value) : ?>
-                                        <option value="<?= strtolower($value) ?>"><?= $value ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        <?php
-                        endforeach;
+                                //Initiate Values
+                                $attr_values = array_values($v);
+                                $attr_values = explode(', ', $attr_values[0]);
+                                ?>
+                                <div class="col-sm-6">
+                                    <select class="color-select">
+                                        <option value>Select <?= $attr_keys ?></option>
+                                        <?php foreach ($attr_values as $key => $value) : ?>
+                                            <option value="<?= strtolower($value) ?>"><?= $value ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            <?php
+                            endforeach;
                         endif;
                         ?>
                     </div>
@@ -112,7 +114,8 @@
                 <ul class="product-actions clearfix">
 
                     <li>
-                        <a href="#" class="btn btn-color btn-lg add-to-cart left"><span>Add to Cart</span></a>
+                        <a href='#' class="btn btn-color btn-lg add-to-cart left"
+                           id="add_to_cart"><span>Add to Cart</span></a>
                     </li>
                     <li>
                         <div class="icon-add-to-wishlist left">
@@ -121,18 +124,28 @@
                     </li>
                     <li>
                         <div class="quantity buttons_added">
-                            <input type="button" value="-" class="minus"/><input type="number" step="1" min="0"
-                                                                                 value="1" title="Qty"
-                                                                                 class="input-text qty text"/><input
-                                    type="button" value="+" class="plus"/>
+                            <input type="button" value="-" class="minus" onclick="plus_minus(this.value)"/>
+                            <input type="number" step="1" min="0" value="1" title="Qty"
+                                   class="input-text qty text prod_qty"/>
+                            <input type="button" value="+" class="plus" onclick="plus_minus(this.value)"/>
                         </div>
                     </li>
                 </ul>
 
+                <div class="alert alert-success fade in alert-dismissible hidden" role="alert">
+                    <button type="button" class="close"><span aria-hidden="true">×</span></button>
+                    <strong></strong>
+                </div>
+
+                <div class="alert alert-danger fade in alert-dismissible hidden" role="alert">
+                    <button type="button" class="close"><span aria-hidden="true">×</span></button>
+                    <strong></strong>
+                </div>
+
                 <div class="product_meta">
                     <span class="sku">SKU: <a href="#"><?= $data['product']->product_sku ?></a></span>
                     <span class="posted_in">Category: <?= get_category_name($data['product']->product_category) ?></span>
-<!--                    <span class="tagged_as">Tags: <a href="#">Elegant</a>, <a href="#">Bag</a></span>-->
+                    <!--                    <span class="tagged_as">Tags: <a href="#">Elegant</a>, <a href="#">Bag</a></span>-->
                 </div>
 
                 <div class="socials-share clearfix">
@@ -247,6 +260,124 @@
     </div> <!-- end container -->
 </section>
 <!-- end single product -->
+
+<script>
+    function error_alert(msg) {
+        $('.single-product').find('.alert-danger').removeClass('hidden').find('strong').html(msg);
+    }
+
+    function remove_error_alert() {
+        $('.single-product').find('.alert-danger').addClass('hidden');
+    }
+
+    function success_alert(msg) {
+        $('.single-product').find('.alert-success').removeClass('hidden').find('strong').html(msg);
+    }
+
+    $('.attr-select .col-sm-6').change(function () {
+        if ($(this).children().val() == '') {
+            $(this).children().addClass('empty-variation');
+            error_alert('You must select variation');
+
+        } else {
+            $(this).children().removeClass('empty-variation');
+        }
+
+        // Dont remove error tag when user not yet select variations
+        if (!$('.attr-select .col-sm-6').children().hasClass('empty-variation')) {
+            remove_error_alert();
+        }
+    })
+
+
+    $('#add_to_cart').click(function (event) {
+        event.preventDefault();
+
+
+        var variation_array = [];
+        var attr_array = [];
+        var qty = $(this).parents('.product-actions').find('.prod_qty').val();
+
+        $('.attr-select .col-sm-6').each(function () {
+            if ($(this).children().val() == '') {
+                $(this).children().addClass('empty-variation');
+                error_alert('You must select variation');
+
+            } else {
+                $(this).children().removeClass('empty-variation');
+            }
+
+            var variation = $(this).find('select option:first').html();
+            variation = variation.replace('Select ', "");
+            var attr_val = $(this).children().val();
+            variation_array.push(variation);
+            attr_array.push(attr_val);
+        })
+
+        // Dont remove error tag when user not yet select variations
+        if (!$('.attr-select .col-sm-6').children().hasClass('empty-variation')) {
+            remove_error_alert();
+        }
+
+        // Will not going to ajax when error tag still existed
+        if (!$('.single-product').find('.alert-danger').hasClass('hidden')) {
+            return false;
+        }
+
+        $.ajax({
+            url: '../app/add_to_cart',
+            method: 'POST',
+            data: {
+                product_id: <?= $data['product']->product_id ?>,
+                quantity: qty,
+                variation: variation_array,
+                attribute: attr_array
+            },
+            success: function (response) {
+
+                var data = JSON.parse(response);
+                if (data.error_code == 1) {
+                    window.location.href = '<?= URLROOT ?>home/login';
+                } else if (data.error_code == 2) {
+                    $('.attr-select .col-sm-6').each(function () {
+                        $(this).children().addClass('empty-variation');
+                    });
+                    error_alert('You must select variation');
+                } else if (data.error_code == 0) {
+                    success_alert('Successfully Add to Cart');
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+            }
+            })
+    })
+
+    $('.close').click(function () {
+        $(this).parent().addClass('hidden');
+    })
+
+    function plus_minus(operate) {
+        var quantity = $('.prod_qty').val();
+
+
+        if (operate == '-') {
+            if (quantity == 1) {
+                error_alert('Quantity Minimum is 1');
+                return false;
+            }
+
+            $('.prod_qty').val(parseInt(quantity) - 1);
+        } else if (operate == '+') {
+            if (!$('.single-product').find('.alert-danger').hasClass('hidden')) {
+                remove_error_alert();
+            }
+
+
+            $('.prod_qty').val(parseInt(quantity) + 1);
+        }
+    }
+</script>
 
 
 <?php include_once APPROOT . '/views/home/inc/footer.php' ?>

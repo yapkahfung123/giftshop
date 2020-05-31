@@ -102,7 +102,6 @@
 
 <!-- jQuery Scripts -->
 
-<script type="text/javascript" src="<?= URLROOT ?>public/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?= URLROOT ?>public/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.2/jquery.flexslider-min.js"></script>
 <script src="https://unpkg.com/flickity@2.2.1/dist/flickity.pkgd.min.js"></script>

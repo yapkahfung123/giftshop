@@ -53,41 +53,41 @@ class App extends Controller
     }
 
     public function delete_img()
-{
+    {
 //        check_adminSession();
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $product = $this->productModel->getProductByID($_POST['p_id']);
+            $product = $this->productModel->getProductByID($_POST['p_id']);
 
-        $product_img = $product->img_path;
+            $product_img = $product->img_path;
 
-        $product_img = json_decode($product_img);
+            $product_img = json_decode($product_img);
 
-        //search index
-        $product_index = array_search($_POST['img'], $product_img);
+            //search index
+            $product_index = array_search($_POST['img'], $product_img);
 
-        unset($product_img[$product_index]);
+            unset($product_img[$product_index]);
 
-        $product_img = array_values($product_img);
+            $product_img = array_values($product_img);
 
-        $result = json_encode($product_img);
+            $result = json_encode($product_img);
 
-        //Update the file path
-        $this->productModel->updateImg($result, $_POST['p_id']);
+            //Update the file path
+            $this->productModel->updateImg($result, $_POST['p_id']);
 
-        //Delete pic from server
-        if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img'])){
-            unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img']);
-            $data['response'] = 'yes';
-        }else{
-            $data['response'] = 'file doesnt exist';
+            //Delete pic from server
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img'])) {
+                unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/products/' . $_POST['product_id'] . '/' . $_POST['img']);
+                $data['response'] = 'yes';
+            } else {
+                $data['response'] = 'file doesnt exist';
+            }
+
+            echo json_encode($data);
         }
-
-        echo json_encode($data);
     }
-}
 
     public function delete_category_img()
     {
@@ -106,14 +106,75 @@ class App extends Controller
             ), 'category', 'cat_id = ' . $_POST['p_id']);
 
 //            Delete pic from server
-            if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/' . $_POST['img'])){
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/' . $_POST['img'])) {
                 unlink($_SERVER['DOCUMENT_ROOT'] . '/public/img/uploads/category/' . $_POST['img']);
                 $data['response'] = 'yes';
-            }else{
+            } else {
                 $data['response'] = 'file doesnt exist';
             }
 
             echo json_encode($data);
+        }
+    }
+
+    public function add_to_cart()
+    {
+        $response = array();
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Check Post Data Is Null;
+            foreach ($_POST['attribute'] as $k => $v) {
+                if (empty($v) || $v == null) {
+                    $response['error_code'] = 2;
+
+                    echo json_encode($response);
+
+                    exit();
+                }
+            }
+
+
+            foreach ($_POST['variation'] as $k => $v) {
+                $var_array[] = array(trim($v) => $_POST['attribute'][$k]);
+            }
+
+
+            if (!isset($_SESSION['user_id'])) {
+                $_SESSION['error_msg'] = 'Please Login First Before Add To Your Cart';
+                $_SESSION['product_page'] = $_POST['product_id'];
+                $response['error_code'] = 1;
+
+                echo json_encode($response);
+                exit();
+            }
+
+            $data = [
+                'product_id' => $_POST['product_id'],
+                'quantity' => $_POST['quantity'],
+                'user_id' => $_SESSION['user_id'],
+                'variation' => json_encode($var_array)
+            ];
+
+
+            $result = $this->dbFunc->insert(array(
+                'user_id' => $data['user_id'],
+                'product_id' => $data['product_id'],
+                'quantity' => $data['quantity'],
+                'variation' => $data['variation'],
+                'status' => 1
+            ), 'cart');
+
+
+            if ($result == 1) {
+                $response['error_code'] = 0;
+                echo json_encode($response);
+                exit();
+            }
+        } else {
+            redirect('');
         }
     }
 }

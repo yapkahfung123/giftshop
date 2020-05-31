@@ -24,3 +24,7 @@
 .img-size{
     color: red;
 }
+
+.empty-variation{
+    border: 2px solid red;
+}

@@ -17,7 +17,11 @@
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/font-icons.css" />
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/sliders.css" />
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/style.css" />
+    <link rel="stylesheet" href="<?= URLROOT ?>public/css/custom.css" />
     <link rel="stylesheet" href="<?= URLROOT ?>public/css/animate.min.css" />
+    <script type="text/javascript" src="<?= URLROOT ?>public/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="<?= URLROOT ?>public/img/home-favicon.png">
