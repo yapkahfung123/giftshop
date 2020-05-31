@@ -125,23 +125,6 @@ class App extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            // Check Post Data Is Null;
-            foreach ($_POST['attribute'] as $k => $v) {
-                if (empty($v) || $v == null) {
-                    $response['error_code'] = 2;
-
-                    echo json_encode($response);
-
-                    exit();
-                }
-            }
-
-
-            foreach ($_POST['variation'] as $k => $v) {
-                $var_array[] = array(trim($v) => $_POST['attribute'][$k]);
-            }
-
-
             if (!isset($_SESSION['user_id'])) {
                 $_SESSION['error_msg'] = 'Please Login First Before Add To Your Cart';
                 $_SESSION['product_page'] = $_POST['product_id'];
@@ -151,11 +134,38 @@ class App extends Controller
                 exit();
             }
 
+            $check_variation = $this->dbFunc->select('*', 'product_variation', 'product_id', $_POST['product_id']);
+
+            if (!empty($check_variation)) {
+                // Check Post Data Is Null;
+                foreach ($_POST['attribute'] as $k => $v) {
+                    if (empty($v) || $v == null) {
+                        $response['error_code'] = 2;
+
+                        echo json_encode($response);
+
+                        exit();
+                    }
+                }
+
+                foreach ($_POST['variation'] as $k => $v) {
+                    $var_array[] = array(trim($v) => $_POST['attribute'][$k]);
+                }
+            }
+
+            if ($_POST['quantity'] < 1) {
+                $response['error_code'] = 3;
+
+                echo json_encode($response);
+
+                exit();
+            }
+
             $data = [
                 'product_id' => $_POST['product_id'],
                 'quantity' => $_POST['quantity'],
                 'user_id' => $_SESSION['user_id'],
-                'variation' => json_encode($var_array)
+                'variation' => !empty($check_variation) ? json_encode($var_array) : null
             ];
 
 

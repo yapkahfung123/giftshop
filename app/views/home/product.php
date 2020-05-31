@@ -334,7 +334,7 @@
                 attribute: attr_array
             },
             success: function (response) {
-
+                
                 var data = JSON.parse(response);
                 if (data.error_code == 1) {
                     window.location.href = '<?= URLROOT ?>home/login';
@@ -343,6 +343,8 @@
                         $(this).children().addClass('empty-variation');
                     });
                     error_alert('You must select variation');
+                } else if (data.error_code == 3) {
+                    error_alert('Quantity Minimum is 1');
                 } else if (data.error_code == 0) {
                     success_alert('Successfully Add to Cart');
                 }
@@ -350,7 +352,7 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError);
             }
-            })
+        })
     })
 
     $('.close').click(function () {
