@@ -9,6 +9,7 @@ class DbModel
     {
         $this->db = new Database();
         $this->prefix = 'ymc_';
+
     }
 
     public function getPrimaryKey($table_name)

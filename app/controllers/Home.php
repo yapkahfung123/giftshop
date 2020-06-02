@@ -45,7 +45,7 @@ class Home extends Controller
                 $this->view('home/login', $data);
             }
 
-            if($user_data) {
+            if ($user_data) {
                 if (password_verify($data['password'], $user_data->password)) {
 //                    Set Cookie for remember password
                     if ($data['remember'] == 'on') {
@@ -62,9 +62,9 @@ class Home extends Controller
 
                     setUserSession($user_data->user_id);
 
-                    if(isset($_SESSION['product_page'])){
+                    if (isset($_SESSION['product_page'])) {
                         redirect('home/product?product_id=' . $_SESSION['product_page']);
-                    }else{
+                    } else {
                         $_SESSION['login_successfully'] = 'You been login successfully.';
                         redirect('home/account');
                     }
@@ -88,8 +88,23 @@ class Home extends Controller
 
     public function cart()
     {
+        $user_id = '';
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+        }
+
+        if (empty($user_id)){
+            $login = 0;
+        }else{
+            $login = 1;
+        }
+
+        $cart = $this->homeModel->retrieveCart($user_id);
+
         $data = [
-            'title' => 'Cart | YMC'
+            'title' => 'Cart | YMC',
+            'cart' => $cart,
+            'login' => $login
         ];
 
         $this->view('home/cart', $data);
@@ -118,7 +133,7 @@ class Home extends Controller
                 'lastname' => $data['account_last_name'],
             ), 'user', 'user_id = ' . $_SESSION['user_id']);
 
-            if($result == true){
+            if ($result == true) {
                 $data['data'] = $this->homeModel->getUser();
 
                 $data['success'] = "Information Update Successfully";
@@ -137,31 +152,31 @@ class Home extends Controller
 
     public function all_products()
     {
-        if(!isset($_GET['page'])){
+        if (!isset($_GET['page'])) {
             $page = 1;
-        }else{
+        } else {
             $page = $_GET['page'];
         }
 
         $category = null;
-        if(isset($_GET['category_id'])){
+        if (isset($_GET['category_id'])) {
             $category = $_GET['category_id'];
         }
 
         $limit = 3;
-        $start = ($page - 1)*$limit;
+        $start = ($page - 1) * $limit;
 
         $products = $this->productModel->getProducts($start, $limit, $category);
         $totalProducts = getProductsRowCount($category);
-        $total_pages = ceil($totalProducts/$limit);
+        $total_pages = ceil($totalProducts / $limit);
 
         $data = [
             'title' => 'Categories | YMC',
             'products' => $products,
-            'pagination' => ['page'=>$page, 'totalPages' => $total_pages, 'totalProducts' => $totalProducts],
+            'pagination' => ['page' => $page, 'totalPages' => $total_pages, 'totalProducts' => $totalProducts],
             'category_id' => $category
         ];
-        
+
         $this->view('home/products', $data);
     }
 
@@ -177,7 +192,7 @@ class Home extends Controller
     public function product()
     {
 
-        if(isset($_SESSION['product_page'])){
+        if (isset($_SESSION['product_page'])) {
             unset($_SESSION['product_page']);
         }
 
@@ -189,7 +204,7 @@ class Home extends Controller
 
         $variation = $this->dbFunc->select('variation_name', 'product_variation', 'product_id', $product_id);
 
-        if($variation != null || !empty($variation)){
+        if ($variation != null || !empty($variation)) {
             $variation_decode = json_decode($variation[0]->variation_name);
         }
 

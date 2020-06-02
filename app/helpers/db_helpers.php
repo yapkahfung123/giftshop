@@ -96,3 +96,27 @@ function getLatestPrimaryKey($table){
 
     return $db->single()->product_id;
 }
+
+function checkUserIdAndSessionId($cartID, $session_id = null){
+    global $db;
+
+    $db->query("SELECT user_id FROM {$db->prefix}cart WHERE cart_id = :id");
+
+    $db->bind('id', $cartID);
+
+    if($db->single()->user_id == $session_id){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function retriveProductNameByCartID($cartID){
+    global $db;
+
+    $db->query("SELECT product_name FROM {$db->prefix}cart a INNER JOIN {$db->prefix}product b ON a.product_id = b.product_id WHERE a.cart_id = :id");
+
+    $db->bind('id', $cartID);
+
+    return ucfirst($db->single()->product_name);
+}

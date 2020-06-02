@@ -125,6 +125,15 @@ class App extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            // Get Product Price
+            $product_price = $this->dbFunc->select("product_price, promo_price", "product", "product_id", $_POST['product_id']);
+
+            if (empty($product_price[0]->promo_price)) {
+                $product_price = $product_price[0]->product_price;
+            } else {
+                $product_price = $product_price[0]->promo_price;
+            }
+
             if (!isset($_SESSION['user_id'])) {
                 $_SESSION['error_msg'] = 'Please Login First Before Add To Your Cart';
                 $_SESSION['product_page'] = $_POST['product_id'];
@@ -165,7 +174,8 @@ class App extends Controller
                 'product_id' => $_POST['product_id'],
                 'quantity' => $_POST['quantity'],
                 'user_id' => $_SESSION['user_id'],
-                'variation' => !empty($check_variation) ? json_encode($var_array) : null
+                'variation' => !empty($check_variation) ? json_encode($var_array) : null,
+                'product_price' => $product_price
             ];
 
 
@@ -173,6 +183,7 @@ class App extends Controller
                 'user_id' => $data['user_id'],
                 'product_id' => $data['product_id'],
                 'quantity' => $data['quantity'],
+                'price' => $data['product_price'],
                 'variation' => $data['variation'],
                 'status' => 1
             ), 'cart');
@@ -185,6 +196,44 @@ class App extends Controller
             }
         } else {
             redirect('');
+        }
+    }
+
+    public function update_cart()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'cart_id' => $_POST['cart_id'],
+                'qty' => $_POST['qty'],
+                'user_id' => $_SESSION['user_id']
+            ];
+
+            $error_cartID = array();
+
+            for ($i = 0; count($data['cart_id']) > $i; $i++) {
+                // Check this cart user id is match with our current user
+                $check = checkUserIdAndSessionId($data['cart_id'][$i], $data['user_id']);
+
+                if($check == true){
+                    $this->dbFunc->update(array(
+                        'quantity' => $data['qty'][$i]
+                    ), 'cart', 'cart_id=' . $data['cart_id'][$i]);
+                }else{
+                    array_push($error_cartID, $data['cart_id'][$i]);
+                }
+            }
+
+            if(empty($error_cartID)){
+                $_SESSION['successfully'] = "Quantity Update Successfully";
+                redirect('home/cart');
+            }else{
+                $_SESSION['error_msg'] = "Some Product Failed To Update";
+                redirect('home/cart');
+            }
+
         }
     }
 }

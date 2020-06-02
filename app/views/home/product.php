@@ -124,10 +124,10 @@
                     </li>
                     <li>
                         <div class="quantity buttons_added">
-                            <input type="button" value="-" class="minus" onclick="plus_minus(this.value)"/>
+                            <input type="button" value="-" class="minus"/>
                             <input type="number" step="1" min="0" value="1" title="Qty"
                                    class="input-text qty text prod_qty"/>
-                            <input type="button" value="+" class="plus" onclick="plus_minus(this.value)"/>
+                            <input type="button" value="+" class="plus"/>
                         </div>
                     </li>
                 </ul>
@@ -261,35 +261,8 @@
 </section>
 <!-- end single product -->
 
+<script src="<?= URLROOT ?>public/js/addcart/add-to-cart.js"></script>
 <script>
-    function error_alert(msg) {
-        $('.single-product').find('.alert-danger').removeClass('hidden').find('strong').html(msg);
-    }
-
-    function remove_error_alert() {
-        $('.single-product').find('.alert-danger').addClass('hidden');
-    }
-
-    function success_alert(msg) {
-        $('.single-product').find('.alert-success').removeClass('hidden').find('strong').html(msg);
-    }
-
-    $('.attr-select .col-sm-6').change(function () {
-        if ($(this).children().val() == '') {
-            $(this).children().addClass('empty-variation');
-            error_alert('You must select variation');
-
-        } else {
-            $(this).children().removeClass('empty-variation');
-        }
-
-        // Dont remove error tag when user not yet select variations
-        if (!$('.attr-select .col-sm-6').children().hasClass('empty-variation')) {
-            remove_error_alert();
-        }
-    })
-
-
     $('#add_to_cart').click(function (event) {
         event.preventDefault();
 
@@ -334,18 +307,27 @@
                 attribute: attr_array
             },
             success: function (response) {
-                
+
                 var data = JSON.parse(response);
+                //If user not login
                 if (data.error_code == 1) {
                     window.location.href = '<?= URLROOT ?>home/login';
-                } else if (data.error_code == 2) {
+                }
+                //If Not Selected Variation
+                else if (data.error_code == 2) {
                     $('.attr-select .col-sm-6').each(function () {
                         $(this).children().addClass('empty-variation');
                     });
                     error_alert('You must select variation');
-                } else if (data.error_code == 3) {
+                }
+
+                //If quantity is 0 or negative value
+                else if (data.error_code == 3) {
                     error_alert('Quantity Minimum is 1');
-                } else if (data.error_code == 0) {
+                }
+
+                //Success
+                else if (data.error_code == 0) {
                     success_alert('Successfully Add to Cart');
                 }
             },
@@ -354,31 +336,6 @@
             }
         })
     })
-
-    $('.close').click(function () {
-        $(this).parent().addClass('hidden');
-    })
-
-    function plus_minus(operate) {
-        var quantity = $('.prod_qty').val();
-
-
-        if (operate == '-') {
-            if (quantity == 1) {
-                error_alert('Quantity Minimum is 1');
-                return false;
-            }
-
-            $('.prod_qty').val(parseInt(quantity) - 1);
-        } else if (operate == '+') {
-            if (!$('.single-product').find('.alert-danger').hasClass('hidden')) {
-                remove_error_alert();
-            }
-
-
-            $('.prod_qty').val(parseInt(quantity) + 1);
-        }
-    }
 </script>
 
 

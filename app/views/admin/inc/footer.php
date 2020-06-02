@@ -40,6 +40,7 @@
 
 
 
+<script src="<?php echo URLROOT;?>public/js/myjs.js"></script>
 
 <script src="<?php echo URLROOT;?>public/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo URLROOT;?>public/datatables/dataTables.bootstrap4.min.js"></script>
@@ -65,6 +66,16 @@
 
 <!-- Page level plugins -->
 <script src="<?php echo URLROOT;?>public/js/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.0.0/validator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="<?php echo URLROOT;?>public/js/demo/chart-area-demo.js"></script>
@@ -73,7 +84,6 @@
 <script src="<?php echo URLROOT;?>public/js/main.js"></script>
 <script src="<?php echo URLROOT;?>public/js/custom.js"></script>
 
-<script src="<?php echo URLROOT;?>public/js/myjs.js"></script>
 
 </body>
 
