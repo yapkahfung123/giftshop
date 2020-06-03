@@ -189,6 +189,20 @@ function deleteCatImg(el, id, category_id) {
     })
 }
 
+function delete_cart(cartID){
+    $.ajax({
+        url: '../app/update_cart',
+        method: 'post',
+        data: {
+            id: cartID,
+            submit: 'Delete Cart'
+        },
+        success: function () {
+            location.reload();
+        }
+    })
+}
+
 $(document).ready(function(){
     $(document).ready(function() {
         var limit = 3;
@@ -198,7 +212,6 @@ $(document).ready(function(){
             enableFiltering: true,
         });
     });
-
 })
 
 

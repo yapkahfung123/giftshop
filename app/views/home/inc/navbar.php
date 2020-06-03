@@ -48,57 +48,50 @@
                             <div class="nav-cart right">
                                 <div class="nav-cart-outer">
                                     <div class="nav-cart-inner">
-                                        <a href="#" class="nav-cart-icon">2</a>
+                                        <?php if(isset($_SESSION['user_id'])): ?>
+                                        <a href="javascript:void(0)" class="nav-cart-icon"><?= countCart($_SESSION['user_id']) ?></a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="nav-cart-container">
                                     <div class="nav-cart-items">
 
+                                        <?php
+                                        $total_price = '';
+                                        foreach (retrieveCart($_SESSION['user_id']) as $k=>$v):
+                                            $img = json_decode($v->img_path);
+                                            $price = $v->price * $v->quantity;
+                                            $total_price += $price;
+                                        ?>
                                         <div class="nav-cart-item clearfix">
                                             <div class="nav-cart-img">
-                                                <a href="#">
-                                                    <img src="img/shop/cart_small_1.jpg" alt="">
+                                                <a href="javascript::void(0)">
+                                                    <?php if(!empty($img)): ?>
+                                                        <img style="width: 80px" src="<?= URLROOT ?>public/img/uploads/products/<?= $v->product_id . '/' . $img[0] ?>" alt=""/>
+                                                    <?php else: ?>
+                                                        <img style="width: 80px" src="<?= URLROOT ?>public/img/no-img.jpg" alt=""/>
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                             <div class="nav-cart-title">
-                                                <a href="#">
-                                                    Ladies Bag
+                                                <a href="javascript::void(0)">
+                                                    <?= ucfirst($v->product_name); ?>
                                                 </a>
                                                 <div class="nav-cart-price">
-                                                    <span>1 x</span>
-                                                    <span>1250.00</span>
+                                                    <span><?= $v->quantity ?> x</span>
+                                                    <span>RM <?= $v->price ?></span>
                                                 </div>
                                             </div>
                                             <div class="nav-cart-remove">
-                                                <a href="#"><i class="icon icon_close"></i></a>
+                                                <a href="javascript:void(0)" onclick="delete_cart(<?= $v->cart_id ?>)"><i class="icon icon_close"></i></a>
                                             </div>
                                         </div>
-
-                                        <div class="nav-cart-item clearfix">
-                                            <div class="nav-cart-img">
-                                                <a href="#">
-                                                    <img src="img/shop/cart_small_2.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="nav-cart-title">
-                                                <a href="#">
-                                                    Sequin Suit longer title
-                                                </a>
-                                                <div class="nav-cart-price">
-                                                    <span>1 x</span>
-                                                    <span>1250.00</span>
-                                                </div>
-                                            </div>
-                                            <div class="nav-cart-remove">
-                                                <a href="#"><i class="icon icon_close"></i></a>
-                                            </div>
-                                        </div>
-
+                                        <?php endforeach; ?>
                                     </div> <!-- end cart items -->
 
                                     <div class="nav-cart-summary">
                                         <span>Cart Subtotal</span>
-                                        <span class="total-price">$1799.00</span>
+                                        <span class="total-price">RM <?= $total_price; ?></span>
                                     </div>
 
                                     <div class="nav-cart-actions mt-20">
@@ -108,10 +101,18 @@
                                 </div>
                             </div>
                             <div class="menu-cart-amount right">
-                      <span>
-                        Cart /
-                        <a href="#"> $1299.50</a>
-                      </span>
+                                <?php if (isset($_SESSION['user_id'])): ?>
+                                    <span>
+                                        Cart /
+                                        <a href="javascript:void(0)">RM <?= $total_price; ?></a>
+                                    </span>
+                                <?php else: ?>
+                                    <span>
+                                        <a href="/home/login">Login</a>
+                                        /
+                                        <a href="/home/register">Register</a>
+                                    </span>
+                                <?php endif; ?>
                             </div>
                         </div> <!-- end cart -->
 
@@ -136,13 +137,13 @@
                                 <a href="<?= URLROOT ?>">Home</a>
                             </li>
 
-                            <li class="dropdown">
-                                <a href="#">Pages</a>
-                                <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
-                                <ul class="dropdown-menu">
-                                    <li><a href="about-us.html">About Us</a></li>
-                                </ul>
-                            </li>
+<!--                            <li class="dropdown">-->
+<!--                                <a href="#">Pages</a>-->
+<!--                                <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>-->
+<!--                                <ul class="dropdown-menu">-->
+<!--                                    <li><a href="about-us.html">About Us</a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
 
                             <?php /*
                             <li class="dropdown">

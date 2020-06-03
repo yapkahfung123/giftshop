@@ -74,4 +74,13 @@ class HomeModel
 
         return $this->db->resultSet();
     }
+
+    public function getCartByID($id){
+        $this->db->query("SELECT b.product_id, b.product_name, b.product_price, b.img_path, a.variation, a.quantity, a.price, a.cart_id
+                               FROM {$this->prefix}cart a INNER JOIN {$this->prefix}product b ON a.product_id = b.product_id WHERE a.cart_id = :id ORDER BY a.created_at DESC ");
+
+        $this->db->bind("id", $id);
+
+        return $this->db->single();
+    }
 }

@@ -44,7 +44,7 @@
                                     ?>
                                     <tr class="cart_item">
                                         <td class="product-thumbnail">
-                                            <a href="javascript::void">
+                                            <a href="javascript::void(0)">
                                                 <?php if(!empty($img)): ?>
                                                     <img src="<?= URLROOT ?>public/img/uploads/products/<?= $v->product_id . '/' . $img[0] ?>" alt=""/>
                                                 <?php else: ?>
@@ -84,7 +84,7 @@
                                             <span class="amount">Rm <?= number_format($v->price * $v->quantity, 2) ?></span>
                                         </td>
                                         <td class="product-remove">
-                                            <a href="#" class="remove" title="Remove this item">
+                                            <a href="javascript:void(0)" class="remove" title="Remove this item" onclick="delete_cart(<?= $v->cart_id ?>)">
                                                 <i class="icon icon_close"></i>
                                             </a>
                                         </td>
@@ -126,7 +126,7 @@
 
                         <div class="col-md-7">
                             <div class="actions right">
-                                <input type="submit" name="update_cart" value="Update Cart" class="btn btn-md btn-dark">
+                                <input type="submit" name="submit" value="Update Cart" class="btn btn-md btn-dark">
                                 <div class="wc-proceed-to-checkout">
                                     <a href="checkout.html"
                                        class="btn btn-md btn-color"><span>proceed to checkout</span></a>
@@ -212,7 +212,9 @@
 </section>
 
 <script src="<?= URLROOT ?>public/js/addcart/add-to-cart.js"></script>
+<script>
 
+</script>
 <!-- end cart -->
 
 

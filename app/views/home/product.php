@@ -329,6 +329,8 @@
                 //Success
                 else if (data.error_code == 0) {
                     success_alert('Successfully Add to Cart');
+
+                    updateNavBar(data.id);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -336,7 +338,29 @@
             }
         })
     })
-</script>
 
+    function updateNavBar(id) {
+        console.log(id)
+        $.ajax({
+            'url': '../app/update_cart',
+            'method': 'post',
+            'data': {
+                cart_id: id,
+                submit: 'Navbar Cart Info'
+            },
+            'success': function (data) {
+                var response = JSON.parse(data);
+                $('.nav-cart-inner .nav-cart-icon').html(response.total_cart_item);
+                $('.nav-cart-items').prepend(response.cart_product);
+                $('.menu-cart-amount span a').html('RM ' + response.total_price);
+                $('.nav-cart-summary .total-price').html('RM ' + response.total_price);
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError);
+            }
+        })
+    }
+</script>
 
 <?php include_once APPROOT . '/views/home/inc/footer.php' ?>

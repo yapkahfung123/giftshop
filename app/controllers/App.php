@@ -6,6 +6,7 @@ class App extends Controller
     {
         $this->dbFunc = $this->model('DbModel');
         $this->productModel = $this->model('ProductModel');
+        $this->homeModel = $this->model('HomeModel');
         $this->entity_id = $this->getUrl();
     }
 
@@ -188,9 +189,10 @@ class App extends Controller
                 'status' => 1
             ), 'cart');
 
-
+            $latest_cart_id = getLatestPK('cart');
             if ($result == 1) {
                 $response['error_code'] = 0;
+                $response['id'] = $latest_cart_id;
                 echo json_encode($response);
                 exit();
             }
@@ -205,35 +207,112 @@ class App extends Controller
             //Sanitize String
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = [
-                'cart_id' => $_POST['cart_id'],
-                'qty' => $_POST['qty'],
-                'user_id' => $_SESSION['user_id']
-            ];
+            if($_POST['submit'] == 'Update Cart'){
+                $data = [
+                    'cart_id' => $_POST['cart_id'],
+                    'qty' => $_POST['qty'],
+                    'user_id' => $_SESSION['user_id']
+                ];
 
-            $error_cartID = array();
+                $error_cartID = array();
 
-            for ($i = 0; count($data['cart_id']) > $i; $i++) {
-                // Check this cart user id is match with our current user
-                $check = checkUserIdAndSessionId($data['cart_id'][$i], $data['user_id']);
+                for ($i = 0; count($data['cart_id']) > $i; $i++) {
+                    // Check this cart user id is match with our current user
+                    $check = checkUserIdAndSessionId($data['cart_id'][$i], $data['user_id']);
 
-                if($check == true){
-                    $this->dbFunc->update(array(
-                        'quantity' => $data['qty'][$i]
-                    ), 'cart', 'cart_id=' . $data['cart_id'][$i]);
+                    if($check == true){
+                        $this->dbFunc->update(array(
+                            'quantity' => $data['qty'][$i]
+                        ), 'cart', 'cart_id=' . $data['cart_id'][$i]);
+                    }else{
+                        array_push($error_cartID, $data['cart_id'][$i]);
+                    }
+                }
+
+                if(empty($error_cartID)){
+                    $_SESSION['successfully'] = "Quantity Update Successfully";
+                    redirect('home/cart');
                 }else{
-                    array_push($error_cartID, $data['cart_id'][$i]);
+                    $_SESSION['error_msg'] = "Some Product Failed To Update";
+                    redirect('home/cart');
                 }
             }
 
-            if(empty($error_cartID)){
-                $_SESSION['successfully'] = "Quantity Update Successfully";
-                redirect('home/cart');
-            }else{
-                $_SESSION['error_msg'] = "Some Product Failed To Update";
-                redirect('home/cart');
+            if($_POST['submit'] == 'Delete Cart'){
+                $cartID = $_POST['id'];
+                $currectUserId = $_SESSION['user_id'];
+                $check = checkUserIdAndSessionId($cartID, $currectUserId);
+
+                if($check == true){
+                    $this->dbFunc->delete($cartID, 'cart');
+                    $_SESSION['successfully'] = "Cart Delete Successfully";
+                }else{
+                    $_SESSION['error_msg'] = "Failed To Delete Cart";
+                }
             }
 
+            if ($_POST['submit'] == 'Navbar Cart Info') {
+                $cart_id = $_POST['cart_id'];
+                $user_id = $_SESSION['user_id'];
+
+                $count_cart = countCart($user_id);
+
+                $user_cart = $this->dbFunc->select('quantity, price', 'cart', 'user_id', $user_id);
+
+                $cart_details = $this->homeModel->getCartByID($cart_id);
+
+                $img = json_decode($cart_details->img_path);
+
+                $total_price = '';
+
+                if(!empty($img)){
+                    $img = '<img style="width: 80px" src="' . URLROOT . 'public/img/uploads/products/' . $cart_details->product_id . '/' . $img[0] .'" alt=""/>';
+                }else{
+                    $img = '<img style="width: 80px" src="' . URLROOT . 'public/img/no-img.jpg" alt=""/>';
+                }
+
+                foreach ($user_cart as $value) {
+                    $price = $value->price * $value->quantity;
+                    $total_price += $price;
+                }
+
+
+                $html = '
+                        <div class="nav-cart-item clearfix">
+                            <div class="nav-cart-img">
+                                <a href="javascript::void(0)">
+                                    '. $img .'
+                                </a>
+                            </div>
+                            <div class="nav-cart-title">
+                                <a href="javascript::void(0)">
+                                    '. ucfirst($cart_details->product_name) .'
+                                </a>
+                                <div class="nav-cart-price">
+                                    <span>' . $cart_details->quantity . ' x</span>
+                                    <span>RM ' . $cart_details->price . '</span>
+                                </div>
+                            </div>
+                            <div class="nav-cart-remove">
+                                <a href="javascript:void(0)" onclick="delete_cart('.$cart_details->cart_id.')"><i class="icon icon_close"></i></a>
+                            </div>
+                        </div>';
+
+
+                $response['cart_product'] = $html;
+                $response['total_cart_item'] = $count_cart;
+                $response['total_price'] = $total_price;
+
+                echo json_encode($response);
+
+            }
+
+            if(empty($_POST['submit'])){
+                redirect('');
+            }
         }
     }
 }
+
+?>
+

@@ -112,6 +112,7 @@
 <script type="text/javascript" src="<?= URLROOT ?>public/js/plugins.js"></script>
 
 <script type="text/javascript" src="<?= URLROOT ?>public/js/scripts.js"></script>
+<script type="text/javascript" src="<?= URLROOT ?>public/js/myjs.js"></script>
 
 
 

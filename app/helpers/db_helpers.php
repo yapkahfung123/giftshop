@@ -104,14 +104,22 @@ function checkUserIdAndSessionId($cartID, $session_id = null){
 
     $db->bind('id', $cartID);
 
-    if($db->single()->user_id == $session_id){
-        return true;
+    $user_id = $db->single();
+
+    if (isset($user_id->user_id)) {
+        if($user_id->user_id == $session_id){
+            return true;
+        }else{
+            return false;
+        }
     }else{
         return false;
     }
+
+
 }
 
-function retriveProductNameByCartID($cartID){
+function retrieveProductNameByCartID($cartID){
     global $db;
 
     $db->query("SELECT product_name FROM {$db->prefix}cart a INNER JOIN {$db->prefix}product b ON a.product_id = b.product_id WHERE a.cart_id = :id");
@@ -119,4 +127,35 @@ function retriveProductNameByCartID($cartID){
     $db->bind('id', $cartID);
 
     return ucfirst($db->single()->product_name);
+}
+
+function retrieveCart($userId){
+    $db = new HomeModel();
+
+    return $db->retrieveCart($userId);
+
+}
+
+function countCart($userId){
+    global $db;
+
+    $db->query("SELECT * FROM {$db->prefix}cart a INNER JOIN {$db->prefix}product b ON a.product_id = b.product_id WHERE a.user_id = :id ORDER BY a.created_at DESC ");
+
+    $db->bind('id', $userId);
+
+    return $db->rowCount();
+}
+
+function getLatestPK($table){
+    global $db;
+    $pk_column = getPrimaryKeyColumn($table);
+
+    $db->query("SELECT {$pk_column} FROM {$db->prefix}{$table} ORDER BY {$pk_column} DESC LIMIT 1");
+
+    if($db->single() != null){
+        return $db->single()->$pk_column;
+    }else{
+        return false;
+    }
+
 }

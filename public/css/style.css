@@ -5280,7 +5280,7 @@ abbr.required {
 }
 @media (max-width: 480px) {
   .page-404 h1 {
-    font-size: 100px;
+    font-size: 40px;
   }
 
   .newsletter .newsletter-form {
