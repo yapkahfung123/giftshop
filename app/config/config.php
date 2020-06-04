@@ -1,19 +1,18 @@
 <?php
 //DB Params
 define('DB_HOST', 'localhost');
-define('DB_USER', 'ymcstore_giftshop');
-define('DB_PASS', 'qu41yN5#');
-define('DB_NAME', 'ymcstore_giftshop_db');
-
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'giftshop');
 
 //SHOW ERROR
-define('DEBUG', false);
+define('DEBUG', true);
 
 // APP ROOT
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //URL ROOT
-define('URLROOT', 'https://www.giftshop.ymcstore.com/');
+define('URLROOT', 'http://giftshop.test/');
 
 // Site Name
 define('SITENAME', 'YMCSTORE');
@@ -23,4 +22,5 @@ define('BASEPATH', __DIR__);
 
 //API TOKEN
 define('API_TOKEN', '9FsNBTD9!@$#YKFFS');
+
 
