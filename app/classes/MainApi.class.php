@@ -20,7 +20,7 @@ class MainApi
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => array(
-                "API_KEY: " . API_TOKEN,
+                "Api-Key: " . API_TOKEN,
             ),
         ));
 
@@ -48,7 +48,7 @@ class MainApi
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_HTTPHEADER => array(
-                "API_KEY: " . API_TOKEN,
+                "Api-Key: " . API_TOKEN,
             ),
         ));
 
