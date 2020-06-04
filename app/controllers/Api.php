@@ -36,12 +36,12 @@ class Api extends Controller
             $response = array();
             $headers = apache_request_headers();
 
-            if (empty($headers['API-KEY'])) {
+            if (empty($headers['Api-Key'])) {
                 $response['error'] = 'API KEY NOT FOUND';
                 goto gotoError;
             }
 
-            if ($headers['API-KEY'] != $token) {
+            if ($headers['Api-Key'] != $token) {
                 $response['error'] = 'API KEY WRONG';
                 goto gotoError;
             }
@@ -70,12 +70,12 @@ class Api extends Controller
         $response = array();
         $headers = apache_request_headers();
 
-        if (empty($headers['API-KEY'])) {
+        if (empty($headers['Api-Key'])) {
             $response['error'] = 'API KEY NOT FOUND';
             goto gotoError;
         }
 
-        if ($headers['API-KEY'] != $token) {
+        if ($headers['Api-Key'] != $token) {
             $response['error'] = 'API KEY WRONG';
             goto gotoError;
         }
