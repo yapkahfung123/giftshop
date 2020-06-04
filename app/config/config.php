@@ -18,4 +18,9 @@ define('URLROOT', 'https://www.giftshop.ymcstore.com/');
 // Site Name
 define('SITENAME', 'YMCSTORE');
 
+// Define BasePath
+define('BASEPATH', __DIR__);
+
+//API TOKEN
+define('API_TOKEN', '9FsNBTD9!@$#YKFFS');
 

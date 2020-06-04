@@ -88,6 +88,7 @@ class Home extends Controller
 
     public function cart()
     {
+
         $user_id = '';
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
@@ -104,7 +105,8 @@ class Home extends Controller
         $data = [
             'title' => 'Cart | YMC',
             'cart' => $cart,
-            'login' => $login
+            'login' => $login,
+            'state_list' => json_decode(getState()),
         ];
 
         $this->view('home/cart', $data);

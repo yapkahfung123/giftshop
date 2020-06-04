@@ -340,7 +340,6 @@
     })
 
     function updateNavBar(id) {
-        console.log(id)
         $.ajax({
             'url': '../app/update_cart',
             'method': 'post',

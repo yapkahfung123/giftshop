@@ -13,6 +13,13 @@ require_once '../public/modules/xcrud/xcrud.php';
 Xcrud_config::$theme = 'bootstrap';
 
 //Autoload core Libraries
-spl_autoload_register(function($className){
-    require_once 'libraries/' . $className . '.php';
-});
+spl_autoload_register('myAutoLoad');
+
+function myAutoLoad($className){
+    if (file_exists(APPROOT . '/libraries/' . $className . '.php')) {
+        require_once 'libraries/' . $className . '.php';
+    }
+    else if(file_exists(APPROOT . '/classes/' . $className . '.class.php')){
+        require_once 'classes/' . $className . '.class.php';
+    }
+}

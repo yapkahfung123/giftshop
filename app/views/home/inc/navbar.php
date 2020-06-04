@@ -15,7 +15,11 @@
                     <div class="nav-cart mobile-cart hidden-lg hidden-md">
                         <div class="nav-cart-outer">
                             <div class="nav-cart-inner">
-                                <a href="#" class="nav-cart-icon">2</a>
+                                <?php if(isset($_SESSION['user_id'])): ?>
+                                <a href="/home/cart" class="nav-cart-icon"><?= countCart($_SESSION['user_id']) ?></a>
+                                <?php else: ?>
+                                <a href="/home/login" >Login</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -177,7 +181,7 @@
                             </li>
 
                             <li class="dropdown">
-                                <a href="#">Shop</a>
+                                <a href="/home/all_products">Shop</a>
                                 <i class="fa fa-angle-down dropdown-toggle" data-toggle="dropdown"></i>
                                 <ul class="dropdown-menu">
                                     <li><a href="/home/all_products">All Products</a></li>
@@ -190,12 +194,15 @@
 
                             <li class="mobile-links">
                                 <ul>
+                                    <?php if(!isset($_SESSION['user_id'])): ?>
                                     <li>
-                                        <a href="#">Login</a>
+                                        <a href="/home/login">Login</a>
                                     </li>
+                                    <?php else: ?>
                                     <li>
-                                        <a href="#">My Account</a>
+                                        <a href="/home/account">My Account</a>
                                     </li>
+                                    <?php endif; ?>
                                     <li>
                                         <a href="#">My Wishlist</a>
                                     </li>

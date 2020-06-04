@@ -118,3 +118,9 @@ function redirect($page){
     header('location: ' . URLROOT . $page);
 }
 
+function getState(){
+    $api = new MainApi();
+
+    return $api->get_state_list();
+}
+

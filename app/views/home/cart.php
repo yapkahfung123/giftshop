@@ -145,25 +145,25 @@
                     <select name="calc_shipping_country" id="calc_shipping_country" class="country_to_state"
                             rel="calc_shipping_state">
                         <option>Select a country…</option>
-                        <option value="AF">Afghanistan</option>
-                        <option value="AX">Åland Islands</option>
-                        <option value="AL">Albania</option>
-                        <option value="DZ">Algeria</option>
-                        <option value="AS">American Samoa</option>
+                        <option value="my">Malaysia</option>
                     </select>
                 </p>
 
                 <div class="row row-20">
                     <div class="col-sm-6">
                         <p class="form-row form-row-wide">
-                            <input type="text" class="input-text" value placeholder="State / county"
-                                   name="calc_shipping_state" id="calc_shipping_state">
+                            <input type="number" min="5" max="5" class="input-text" placeholder="Postcode" name="calc_shipping_postcode" id="calc_shipping_postcode">
                         </p>
                     </div>
+
                     <div class="col-sm-6">
                         <p class="form-row form-row-wide">
-                            <input type="text" class="input-text" value placeholder="Postcode"
-                                   name="calc_shipping_postcode" id="calc_shipping_postcode">
+                            <select class="input-text" name="calc_shipping_state" id="calc_shipping_state" disabled style="cursor: no-drop;">
+                                <option value="">Select State</option>
+                                <?php foreach ($data['state_list'] as $k=>$v) : ?>
+                                <option value="<?= str_replace(' ', '', $v) ?>"><?= $v ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </p>
                     </div>
                 </div>
@@ -212,8 +212,28 @@
 </section>
 
 <script src="<?= URLROOT ?>public/js/addcart/add-to-cart.js"></script>
-<script>
 
+<script>
+    $('#calc_shipping_postcode').keyup(function () {
+        var postcode = $(this).val();
+        if (postcode.length == 5) {
+            $.ajax({
+                url: '../api/state',
+                method: 'post',
+                data: {
+                    'postcode': postcode
+                },
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if(data.region != null && data.state_name != null){
+                        $('#calc_shipping_state option:selected').removeAttr('selected');
+                        $('#calc_shipping_state option[value=' + data.state_name.replace(/\s/g, "") + ']').attr('selected', 'selected');
+
+                    }
+                }
+            })
+        }
+    })
 </script>
 <!-- end cart -->
 
