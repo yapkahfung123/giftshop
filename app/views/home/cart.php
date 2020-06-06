@@ -218,7 +218,7 @@
         var postcode = $(this).val();
         if (postcode.length == 5) {
             $.ajax({
-                url: '../api/state',
+                url: '../api/get_state',
                 method: 'post',
                 data: {
                     'postcode': postcode
@@ -228,7 +228,6 @@
                     if(data.region != null && data.state_name != null){
                         $('#calc_shipping_state option:selected').removeAttr('selected');
                         $('#calc_shipping_state option[value=' + data.state_name.replace(/\s/g, "") + ']').attr('selected', 'selected');
-
                     }
                 }
             })

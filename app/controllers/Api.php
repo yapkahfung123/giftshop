@@ -24,7 +24,7 @@ class Api extends Controller
         }
     }
 
-    public function get_state()
+    public function get_state_with_token()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Sanitize String
@@ -63,7 +63,33 @@ class Api extends Controller
         }
     }
 
-    public function get_state_list()
+
+    public function get_state()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $postcode = $_POST['postcode'];
+
+            if (!Postcode::validate($postcode)) {
+                $response['error'] = 'Invalid Postcode Entered';
+                goto gotoError;
+            }
+
+            $response['state_name'] = Postcode::checkState($postcode);
+            $response['region'] = Postcode::checkRegion($postcode);
+
+            gotoError:
+            echo json_encode($response);
+        } else {
+            $response['error'] = 'Error';
+
+            echo json_encode($response);
+        }
+    }
+
+    public function get_state_list_with_token()
     {
 
         $token = API_TOKEN;
@@ -80,6 +106,19 @@ class Api extends Controller
             goto gotoError;
         }
 
+        $Postcode = Postcode::$data;
+        foreach ($Postcode as $v) {
+            $state[] = array_keys($v);
+        }
+
+        $response = array_merge($state[0], $state[1]);
+
+        gotoError:
+        echo json_encode($response);
+    }
+
+    public function get_state_list()
+    {
         $Postcode = Postcode::$data;
         foreach ($Postcode as $v) {
             $state[] = array_keys($v);
