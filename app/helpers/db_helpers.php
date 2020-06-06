@@ -133,7 +133,6 @@ function retrieveCart($userId){
     $db = new HomeModel();
 
     return $db->retrieveCart($userId);
-
 }
 
 function countCart($userId){
@@ -153,9 +152,22 @@ function getLatestPK($table){
     $db->query("SELECT {$pk_column} FROM {$db->prefix}{$table} ORDER BY {$pk_column} DESC LIMIT 1");
 
     if($db->single() != null){
-        return $db->single()->$pk_column;
+        return $db->single()->{$pk_column};
     }else{
         return false;
     }
 
+}
+
+function getCartTotal($userId){
+    $cartModel = new HomeModel();
+
+    $cart = $cartModel->retrieveCart($userId);
+    $total_price = '';
+    foreach ($cart as $k => $v) {
+        $price = $v->price * $v->quantity;
+        $total_price += $price;
+    }
+
+    return $total_price;
 }

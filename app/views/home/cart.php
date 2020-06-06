@@ -184,7 +184,7 @@
                         <tr class="cart-subtotal">
                             <th>Cart Subtotal</th>
                             <td>
-                                <span class="amount">$1490.00</span>
+                                <span class="amount">RM <?= getCartTotal($_SESSION['user_id']); ?></span>
                             </td>
                         </tr>
                         <tr class="shipping">
@@ -196,7 +196,7 @@
                         <tr class="order-total">
                             <th><strong>Order Total</strong></th>
                             <td>
-                                <strong><span class="amount">$1490.00</span></strong>
+                                <strong><span class="amount">RM <?= getCartTotal($_SESSION['user_id']); ?></span></strong>
                             </td>
                         </tr>
                         </tbody>

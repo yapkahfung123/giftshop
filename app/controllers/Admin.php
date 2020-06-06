@@ -465,4 +465,80 @@ class Admin extends Controller
             }
         }
     }
+
+    public function shipping(){
+        check_adminSession();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            foreach ($_POST as $k => $v) {
+                $data[$k] = $v;
+            }
+
+            $result = $this->dbFunc->insert(array(
+                'shipping_group_name' => $data['shipping_name'],
+                'shipping_price' => $data['shipping_price'],
+                'is_active' => $data['is_active'],
+            ), 'shipping_group');
+
+            if ($result == true) {
+                $_SESSION['success_msg'] = 'Shipping Group Added';
+            }
+        }
+
+
+        $success_msg = '';
+        if(isset($_SESSION['success_msg'])){
+            $success_msg = $_SESSION['success_msg'];
+            unset($_SESSION['success_msg']);
+        }
+
+        $shipping_data = $this->dbFunc->select('*', 'shipping_group');
+
+        $data = [
+            'title' => 'Shipping | YMC',
+            'success_msg' => $success_msg,
+            'shipping_data' => $shipping_data
+        ];
+
+        $this->view('admin/shipping/shipping', $data);
+    }
+
+    public function edit_shipping(){
+        check_adminSession();
+
+
+        $id = $this->entity_id;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            foreach ($_POST as $k => $v) {
+                $data[$k] = $v;
+            }
+
+            $result = $this->dbFunc->update(array(
+                'shipping_group_name' => $data['shipping_name'],
+                'shipping_price' => $data['shipping_price'],
+                'is_active' => $data['is_active'],
+            ), 'shipping_group', 'id='.$id);
+
+            if ($result == true) {
+                $_SESSION['success_msg'] = 'Shipping Group Updated';
+                redirect('admin/shipping');
+            }
+        }
+
+        $shipping_data = $this->dbFunc->select('*', 'shipping_group', 'id', $id);
+
+        $data = [
+            'title' => 'Edit Shipping | YMCSTORE',
+            'shipping_data' => $shipping_data[0],
+        ];
+
+        $this->view('admin/shipping/edit', $data);
+    }
 }

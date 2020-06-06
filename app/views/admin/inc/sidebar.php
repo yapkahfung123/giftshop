@@ -63,6 +63,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="<?= URLROOT . 'admin/shipping' ?>">
+            <i class="fas fa-fw fa-truck"></i>
+            <span>Shipping</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="<?= URLROOT . 'admin/options' ?>">
             <i class="fas fa-fw fa-cog"></i>
             <span>Options</span></a>
