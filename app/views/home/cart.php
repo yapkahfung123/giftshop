@@ -158,7 +158,7 @@
 
                     <div class="col-sm-6">
                         <p class="form-row form-row-wide">
-                            <select class="input-text" name="calc_shipping_state" id="calc_shipping_state" disabled style="cursor: no-drop;">
+                            <select class="input-text" name="calc_shipping_state" id="calc_shipping_state" style="cursor: no-drop;">
                                 <option value="">Select State</option>
                                 <?php foreach ($data['state_list'] as $k=>$v) : ?>
                                 <option value="<?= str_replace(' ', '', $v) ?>"><?= $v ?></option>
