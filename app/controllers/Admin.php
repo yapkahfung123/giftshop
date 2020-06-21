@@ -172,7 +172,7 @@ class Admin extends Controller
             foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }
-            if(isset($_FILES)){
+            if (isset($_FILES)) {
                 $save_img = save_product_img($_FILES, $latest_id, 'add');
             }
 
@@ -206,12 +206,12 @@ class Admin extends Controller
         $product = $this->productModel->getProductByID($entity_id);
         $variation = $this->productModel->check_variation($entity_id);
 
-        if(!empty($variation)){
-            if($variation->variation_name != '[]'){
+        if (!empty($variation)) {
+            if ($variation->variation_name != '[]') {
                 $variation_decode = json_decode($variation->variation_name);
 
                 // Switch objects to array
-                foreach ($variation_decode as $k => $v){
+                foreach ($variation_decode as $k => $v) {
                     $array[] = get_object_vars($v);
                 }
 
@@ -220,7 +220,7 @@ class Admin extends Controller
             }
         }
 
-        $category =$this->productModel->getCategory();
+        $category = $this->productModel->getCategory();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -233,9 +233,9 @@ class Admin extends Controller
 
 
             //If user didnt upload anything, then take data from db
-            if($_FILES['p_img']['name'][0] != ''){
+            if ($_FILES['p_img']['name'][0] != '') {
                 $save_img = save_product_img($_FILES, $entity_id, 'edit');
-            }else{
+            } else {
                 $save_img = array('img_upload' => json_decode($product->img_path));
             }
 
@@ -266,7 +266,8 @@ class Admin extends Controller
         $this->view('admin/product/edit', $data);
     }
 
-    public function delete_product(){
+    public function delete_product()
+    {
 
         $productID = $_POST['product_id'];
 
@@ -274,7 +275,7 @@ class Admin extends Controller
 
         if ($deleteForm) {
             $data['status'] = 'true';
-        }else{
+        } else {
             $data['status'] = 'false';
         }
 
@@ -305,7 +306,7 @@ class Admin extends Controller
                 $data[$key] = $value;
             }
 
-            if(isset($_FILES)){
+            if (isset($_FILES)) {
                 $save_img = save_category_image($_FILES);
             }
             $data['img_upload'] = $save_img['img_upload'][0];
@@ -349,14 +350,13 @@ class Admin extends Controller
 
             //If user didnt upload anything, then take data from db
 
-            if($_FILES['p_img']['name'] != ''){
+            if ($_FILES['p_img']['name'] != '') {
                 $save_img = save_category_image($_FILES);
-            }else{
+            } else {
                 $save_img['img_upload'][0] = $category->img_path;
             }
 
             $data['img_upload'] = $save_img['img_upload'][0];
-
 
 
             $data['id'] = $this->entity_id;
@@ -382,7 +382,8 @@ class Admin extends Controller
         $this->view('admin/category/edit', $data);
     }
 
-    public function delete_category(){
+    public function delete_category()
+    {
 
         $categoryID = $_POST['category_id'];
 
@@ -390,14 +391,15 @@ class Admin extends Controller
 
         if ($deleteForm) {
             $data['status'] = 'true';
-        }else{
+        } else {
             $data['status'] = 'false';
         }
 
         echo json_encode($data);
     }
 
-    public function user_list(){
+    public function user_list()
+    {
         check_adminSession();
 
         $user_list = $this->adminModel->user_lists();
@@ -406,11 +408,12 @@ class Admin extends Controller
             'title' => 'User List | YMC',
             'user_list' => $user_list
         ];
-        
+
         $this->view('admin/user-list', $data);
     }
 
-    public function options(){
+    public function options()
+    {
         check_adminSession();
 
         $data = [
@@ -420,7 +423,8 @@ class Admin extends Controller
         $this->view('admin/options', $data);
     }
 
-    public function product_tag(){
+    public function product_tag()
+    {
         check_adminSession();
         $tag = $this->productModel->getProductTag();
         $product = $this->productModel->getProduct();
@@ -434,7 +438,8 @@ class Admin extends Controller
         $this->view('admin/product/product-tag', $data);
     }
 
-    public function update_tag(){
+    public function update_tag()
+    {
         check_adminSession();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -446,27 +451,28 @@ class Admin extends Controller
                 $post_val[$key] = $value;
             }
 
-            if(isset($post_val['tag'])){
+            if (isset($post_val['tag'])) {
                 $post_val['tag'] = json_encode($post_val['tag']);
-            }else{
+            } else {
                 $post_val['tag'] = null;
             }
 
             $insert = $this->dbFunc->update(array(
                 "product_id" => $post_val['tag']
-            ), 'product_tag', 'id='.$post_val['tag_id']);
+            ), 'product_tag', 'id=' . $post_val['tag_id']);
 
-            if($insert == 'true'){
+            if ($insert == 'true') {
                 $_SESSION['success_msg'] = 'Tag ID <b>' . $post_val['tag_id'] . '</b> has successfully update';
 
                 redirect('admin/product_tag');
-            }else{
+            } else {
                 redirect('admin/product_tag');
             }
         }
     }
 
-    public function shipping(){
+    public function shipping()
+    {
         check_adminSession();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -490,7 +496,8 @@ class Admin extends Controller
 
 
         $success_msg = '';
-        if(isset($_SESSION['success_msg'])){
+
+        if (isset($_SESSION['success_msg'])) {
             $success_msg = $_SESSION['success_msg'];
             unset($_SESSION['success_msg']);
         }
@@ -506,11 +513,12 @@ class Admin extends Controller
         $this->view('admin/shipping/shipping', $data);
     }
 
-    public function edit_shipping(){
+    public function edit_shipping()
+    {
         check_adminSession();
 
-
         $id = $this->entity_id;
+        $state = json_decode(getState());
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Sanitize String
@@ -524,21 +532,43 @@ class Admin extends Controller
                 'shipping_group_name' => $data['shipping_name'],
                 'shipping_price' => $data['shipping_price'],
                 'is_active' => $data['is_active'],
-            ), 'shipping_group', 'id='.$id);
+            ), 'shipping_group', 'id=' . $id);
 
             if ($result == true) {
                 $_SESSION['success_msg'] = 'Shipping Group Updated';
-                redirect('admin/shipping');
+//                redirect('admin/shipping');
             }
         }
 
         $shipping_data = $this->dbFunc->select('*', 'shipping_group', 'id', $id);
+        $state_data = $this->dbFunc->select('*', 'shipping_name', 'shipping_group_id', $id);
+        $selected_shipping = $this->adminModel->select_state($id);
 
         $data = [
             'title' => 'Edit Shipping | YMCSTORE',
+            'id' => $id,
             'shipping_data' => $shipping_data[0],
+            'state' => $state,
+            'selected_state' => $selected_shipping != null? $selected_shipping[0]->shipping_name : ''
         ];
 
         $this->view('admin/shipping/edit', $data);
     }
+
+    public function delete_shipping()
+    {
+
+        $shippingID = $_POST['shipping_id'];
+
+        $deleteShipping = $this->adminModel->delete_shipping_by_id($shippingID);
+
+        if ($deleteShipping) {
+            $data['status'] = 'true';
+        } else {
+            $data['status'] = 'false';
+        }
+
+        echo json_encode($data);
+    }
+
 }

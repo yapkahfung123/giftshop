@@ -35,7 +35,7 @@ class Database
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $option);
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
-            echo $this->error;
+            echo print('<pre>' .print_r($e, true). '</pre>');
         }
     }
 

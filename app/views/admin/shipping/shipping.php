@@ -3,11 +3,6 @@ require APPROOT . '/views/admin/inc/header.php';
 ?>
 
 <body id="page-top">
-<style>
-    .hide {
-        display: none;
-    }
-</style>
 <div id="wrapper">
 
     <!-- Sidebar -->
@@ -105,6 +100,7 @@ require APPROOT . '/views/admin/inc/header.php';
                                             <td><?= $v->shipping_price ?></td>
                                             <td>
                                                 <a href="/admin/edit_shipping/<?= $v->id ?>"><i class="fas fa-pen"></i></a>
+                                                <button class="deleteShipping" style="border: none; background: none;"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

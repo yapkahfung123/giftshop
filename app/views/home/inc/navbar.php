@@ -61,7 +61,7 @@
                                     <div class="nav-cart-items">
 
                                         <?php
-                                        $total_price = '';
+                                        $total_price = 0;
                                         foreach (retrieveCart($_SESSION['user_id']) as $k=>$v):
                                             $img = json_decode($v->img_path);
                                             $price = $v->price * $v->quantity;

@@ -163,7 +163,7 @@ function getCartTotal($userId){
     $cartModel = new HomeModel();
 
     $cart = $cartModel->retrieveCart($userId);
-    $total_price = '';
+    $total_price = 0;
     foreach ($cart as $k => $v) {
         $price = $v->price * $v->quantity;
         $total_price += $price;

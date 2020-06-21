@@ -190,7 +190,7 @@
                         <tr class="shipping">
                             <th>Shipping</th>
                             <td>
-                                <span>Free Shipping</span>
+                                <span>-</span>
                             </td>
                         </tr>
                         <tr class="order-total">
@@ -228,12 +228,53 @@
                     if(data.region != null && data.state_name != null){
                         $('#calc_shipping_state option:selected').removeAttr('selected');
                         $('#calc_shipping_state option[value=' + data.state_name.replace(/\s/g, "") + ']').attr('selected', 'selected');
+                        getShippingAmount(data.state_name);
                     }
                 }
             })
         }
     })
+
+    $('#calc_shipping_state').change(function () {
+        getShippingAmount($(this).find('option:selected').html());
+    })
+
+    $
+
+    function getShippingAmount(state){
+        $.ajax({
+            url: '../api/get_shipping_fee',
+            method: 'post',
+            data: {
+                'state': state
+            },
+            success: function (response) {
+                var data = JSON.parse(response);
+
+                if (data.error_code == 0) {
+                    $('.shipping').find('span').html('RM ' + data.shipping_price)
+                    calculateTotal();
+                }
+
+                if(data.error_code == 1){
+                    console.log('Shipping Name Not Found');
+                }
+            }
+        })
+    }
+
+    function calculateTotal(){
+        var table = $('.cart_totals .shop_table');
+
+        var cart_total = table.find('span').eq(0).html().split('RM ')[1];
+        var shipping_fee = table.find('span').eq(1).html().split('RM ')[1];
+
+        var total = parseFloat(cart_total) + parseFloat(shipping_fee);
+
+        table.find('span').eq(2).html('RM ' + total);
+    }
 </script>
+
 <!-- end cart -->
 
 

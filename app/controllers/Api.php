@@ -129,4 +129,43 @@ class Api extends Controller
         gotoError:
         echo json_encode($response);
     }
+
+    public function get_shipping_fee()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $state = $_POST['state'];
+//        $state = 'Kuala Lumpur';
+
+            $decode = $id = null;
+
+            $all_state_from_db = $this->dbFunc->select('*', 'shipping_name');
+
+            foreach ($all_state_from_db as $key => $value) {
+                $decode = json_decode($value->shipping_name);
+                if (in_array($state, $decode)) {
+                    $id = $value->shipping_group_id;
+                }
+            }
+
+            if ($id == null) {
+                $response['error_code'] = 1;
+
+                echo json_encode($response);
+                exit();
+            }
+
+            $shipping_price = $this->dbFunc->select('shipping_price', 'shipping_group', 'id', $id)[0]->shipping_price;
+
+            if ($shipping_price != null) {
+                $response['error_code'] = 0;
+                $response['shipping_price'] = $shipping_price;
+
+                echo json_encode($response);
+                exit();
+            }
+        }
+    }
 }

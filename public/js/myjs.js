@@ -203,6 +203,39 @@ function delete_cart(cartID){
     })
 }
 
+$('.deleteShipping').click(function () {
+    var shipping_id = $(this).closest("tr").find("td:first").html();
+
+    swal({
+        title: "Are you sure?",
+        text: "Shipping Id " + shipping_id + " will be deleted.",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+    }).then((willDelete) => {
+        if (willDelete.value) {
+
+            $(this).closest("tr").remove();
+
+            $.ajax({
+                url: "delete_shipping",
+                method: "POST",
+                data: {"shipping_id": shipping_id},
+                success: function (data) {
+                    response = JSON.parse(data);
+
+                    if (response.status == 'true') {
+                        swal("Done!", "It was succesfully deleted!", "success").then((confirm) => {
+                            location.reload()
+                        });
+                    }
+                },
+            })
+        }
+    });
+})
+
+
 $(document).ready(function(){
     $(document).ready(function() {
         var limit = 3;

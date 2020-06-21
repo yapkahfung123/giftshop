@@ -7,6 +7,7 @@ class App extends Controller
         $this->dbFunc = $this->model('DbModel');
         $this->productModel = $this->model('ProductModel');
         $this->homeModel = $this->model('HomeModel');
+        $this->adminModel = $this->model('AdminModel');
         $this->entity_id = $this->getUrl();
     }
 
@@ -207,7 +208,7 @@ class App extends Controller
             //Sanitize String
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            if($_POST['submit'] == 'Update Cart'){
+            if ($_POST['submit'] == 'Update Cart') {
                 $data = [
                     'cart_id' => $_POST['cart_id'],
                     'qty' => $_POST['qty'],
@@ -220,33 +221,33 @@ class App extends Controller
                     // Check this cart user id is match with our current user
                     $check = checkUserIdAndSessionId($data['cart_id'][$i], $data['user_id']);
 
-                    if($check == true){
+                    if ($check == true) {
                         $this->dbFunc->update(array(
                             'quantity' => $data['qty'][$i]
                         ), 'cart', 'cart_id=' . $data['cart_id'][$i]);
-                    }else{
+                    } else {
                         array_push($error_cartID, $data['cart_id'][$i]);
                     }
                 }
 
-                if(empty($error_cartID)){
+                if (empty($error_cartID)) {
                     $_SESSION['successfully'] = "Quantity Update Successfully";
                     redirect('home/cart');
-                }else{
+                } else {
                     $_SESSION['error_msg'] = "Some Product Failed To Update";
                     redirect('home/cart');
                 }
             }
 
-            if($_POST['submit'] == 'Delete Cart'){
+            if ($_POST['submit'] == 'Delete Cart') {
                 $cartID = $_POST['id'];
                 $currectUserId = $_SESSION['user_id'];
                 $check = checkUserIdAndSessionId($cartID, $currectUserId);
 
-                if($check == true){
+                if ($check == true) {
                     $this->dbFunc->delete($cartID, 'cart');
                     $_SESSION['successfully'] = "Cart Delete Successfully";
-                }else{
+                } else {
                     $_SESSION['error_msg'] = "Failed To Delete Cart";
                 }
             }
@@ -263,11 +264,11 @@ class App extends Controller
 
                 $img = json_decode($cart_details->img_path);
 
-                $total_price = '';
+                $total_price = 0;
 
-                if(!empty($img)){
-                    $img = '<img style="width: 80px" src="' . URLROOT . 'public/img/uploads/products/' . $cart_details->product_id . '/' . $img[0] .'" alt=""/>';
-                }else{
+                if (!empty($img)) {
+                    $img = '<img style="width: 80px" src="' . URLROOT . 'public/img/uploads/products/' . $cart_details->product_id . '/' . $img[0] . '" alt=""/>';
+                } else {
                     $img = '<img style="width: 80px" src="' . URLROOT . 'public/img/no-img.jpg" alt=""/>';
                 }
 
@@ -281,12 +282,12 @@ class App extends Controller
                         <div class="nav-cart-item clearfix">
                             <div class="nav-cart-img">
                                 <a href="javascript::void(0)">
-                                    '. $img .'
+                                    ' . $img . '
                                 </a>
                             </div>
                             <div class="nav-cart-title">
                                 <a href="javascript::void(0)">
-                                    '. ucfirst($cart_details->product_name) .'
+                                    ' . ucfirst($cart_details->product_name) . '
                                 </a>
                                 <div class="nav-cart-price">
                                     <span>' . $cart_details->quantity . ' x</span>
@@ -294,7 +295,7 @@ class App extends Controller
                                 </div>
                             </div>
                             <div class="nav-cart-remove">
-                                <a href="javascript:void(0)" onclick="delete_cart('.$cart_details->cart_id.')"><i class="icon icon_close"></i></a>
+                                <a href="javascript:void(0)" onclick="delete_cart(' . $cart_details->cart_id . ')"><i class="icon icon_close"></i></a>
                             </div>
                         </div>';
 
@@ -307,9 +308,46 @@ class App extends Controller
 
             }
 
-            if(empty($_POST['submit'])){
+            if (empty($_POST['submit'])) {
                 redirect('');
             }
+        }
+    }
+
+    public function shipping_name()
+    {
+        check_adminSession();
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Sanitize String
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'state' => json_encode($_POST['state']),
+                'group_id' => $_POST['group_id'],
+            ];
+
+            // Check have record or not
+            $check_shipping_state_record = $this->dbFunc->select('*', 'shipping_name', 'shipping_group_id', $data['group_id']);
+
+            if ($check_shipping_state_record != null) {
+                $type = 'update';
+            }else{
+                $type = 'insert';
+            }
+
+            $result = $this->adminModel->add_state_name(array('id' => $data['group_id'], 'name' => $data['state']), $type);
+
+            if ($result == true) {
+                $_SESSION['success_msg'] = 'State added';
+            } else {
+                $_SESSION['error_msg'] = 'Failed to add';
+            }
+
+            redirect('admin/edit_shipping/' . $data['group_id']);
+
+        } else {
+            redirect('admin/shipping');
         }
     }
 }
