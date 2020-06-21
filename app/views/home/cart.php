@@ -168,11 +168,11 @@
                     </div>
                 </div>
 
-                <p>
-                    <button type="submit" name="calc_shipping" value="1" class="btn btn-md btn-dark mt-20 mb-mdm-40">
-                        Update Totals
-                    </button>
-                </p>
+<!--                <p>-->
+<!--                    <button type="submit" name="calc_shipping" value="1" class="btn btn-md btn-dark mt-20 mb-mdm-40">-->
+<!--                        Update Totals-->
+<!--                    </button>-->
+<!--                </p>-->
             </div> <!-- end col shipping calculator -->
 
             <div class="col-md-4 col-md-offset-2">
